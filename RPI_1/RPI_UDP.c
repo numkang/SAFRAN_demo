@@ -66,16 +66,20 @@ int main(int argc, char **argv)
 	extern int msgcnt;			/* count # of messages we received */
 	extern unsigned char buf[BUFSIZE];	/* receive buffer */
 	
+	FILE *f_PWM = fopen("pwm.txt","w");
+	if(f_PWM == NULL){
+		printf("Error opening file pwm.txt");
+	}
+	
 	FILE *f_sensor = fopen("sensor.txt","r");
 	if(f_sensor == NULL){
-		printf("Error opening file");
+		printf("Error opening file sensor.txt");
 	}
 	char str[MAXCHAR];
 	char str_pwm[5];
 	int rpi_num = RPI_CONTROLLER;
 	
-	while(1){
-		
+	while(1){		
 		
 		printf("waiting on port %d\n", SERVICE_PORT);
 		recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
@@ -101,9 +105,11 @@ int main(int argc, char **argv)
 			rpi_num = RPI_CONTROLLER;
 			memset(str_pwm, '\0', sizeof(str_pwm));
 			strncpy(str_pwm, buf+2, 4);
-			printf("%s, %s", str_pwm, str);
+			printf("%s, %s\n", str_pwm, str);
 			sprintf(buf, "%s", str);
 			
+			rewind(f_PWM);
+			fprintf(f_PWM, "%d", str_pwm);
 		}else if(buf[0] == RPI_MONITOR){
 			rpi_num = RPI_MONITOR;
 			sprintf(buf, "%s,%s", str, str_pwm);

@@ -12,6 +12,7 @@
 #include <string.h>
 #include <bcm2835.h>
 
+#define MAXCHAR 5
 #define PIN RPI_GPIO_P1_12
 #define PWM_CHANNEL 0
 #define RANGE 2048
@@ -52,10 +53,20 @@ void PWM_send(int PWM){
 
 int main(int argc, char **argv)
 {	
+	FILE *f_sensor = fopen("pwm.txt","r");
+	if(f_sensor == NULL){
+		printf("Error opening file pwm.txt");
+	}
+	char str_pwm[MAXCHAR];
 	PWM_setup();
+	int PWM = 1000;
 	
 	while(1){
-		PWM_send(0);		
+		f_sensor = fopen("sensor.txt","r");
+		fgets(str_pwm, MAXCHAR, f_sensor);
+		close(f_sensor);
+		PWM = atoi(f_sensor);
+		PWM_send(PWM);		
 	}
 	return 0;
 }
