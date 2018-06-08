@@ -122,10 +122,11 @@ int main(void)
 	UDP_Client_setup();
 	int PWM = 0;
 	float sensor_data = 0.0;
-	/*while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
+	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
+	for(int i = 0; i < 5; i++){ // send 5 times
 		sensor_data = send_PWM_request_SENSOR(PWM);
 		PWM = Controller(sensor_data);
-	}*/
+	}
 	close(fd);
 	return 0;
 }
