@@ -88,6 +88,7 @@ float send_PWM_request_SENSOR(int PWM){
 	extern char buf[BUFLEN];	/* message buffer */
 	extern int recvlen;		/* # bytes in acknowledgement message */
 	extern char *server;
+	float sensor_data = 0.0;
 	
 	printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
 	sprintf(buf, "%d,%d", RPI_NUM, PWM);
@@ -101,12 +102,13 @@ float send_PWM_request_SENSOR(int PWM){
         buf[recvlen] = 0;	/* expect a printable string - terminate it */
         printf("received message: \"%s\"\n", buf);
     }
-    return 1.0+2.0;
+    sensor_data = atof(buf);
+    return sensor_data;
 }
 
 int force2pwm(float force){
 	//some mapping function
-	return 1+1;
+	return 1000;
 }
 
 int Controller(float sensor_data){
@@ -120,12 +122,13 @@ int Controller(float sensor_data){
 int main(void)
 {
 	UDP_Client_setup();
-	int PWM = 0;
+	int PWM = 1000;
 	float sensor_data = 0.0;
 	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
 	for(int i = 0; i < 5; i++){ // send 5 times
 		sensor_data = send_PWM_request_SENSOR(PWM);
 		PWM = Controller(sensor_data);
+		printf("%.12f", sensor_data);
 	}
 	close(fd);
 	return 0;
