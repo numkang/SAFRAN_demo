@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 			fprintf(f_PWM, "%d", str_pwm);
 		}else if(buf[0] == RPI_MONITOR){
 			rpi_num = RPI_MONITOR;
-			sprintf(buf, "%s,%s", str, str_pwm);
+			sprintf(buf, "%s,%s", str_pwm, str);
 		}		
 	
 		//sprintf(buf, "ack %d", msgcnt++);
