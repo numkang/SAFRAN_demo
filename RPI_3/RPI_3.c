@@ -15,6 +15,9 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include "port.h"
+#include <wiringPi.h>
+
+#define LedPin 1
 
 #define BUFLEN 2048
 #define MSGS 3	/* number of messages to send */
@@ -115,16 +118,75 @@ int Monitor(int PWM, float sensor_data){
 	return 0;
 }
 
+// backup controller used to monitor
+int Controller(float thrust_goal, float meas_thrust, float* integral){
+	// float force = 0;
+	// PID controller
+	float Kp = 1000; // to tune
+	float Ki = 1000; // to tune
+	
+	float error = thrust_goal - meas_thrust; 
+	
+	*integral = *integral + error;
+	
+	int new_cmd = 1377 + (int) (Kp * error + Ki * *integral + 0.5); //round + offset: 1378 correspnds to the value above which the PWM signals makes the rotor rotate
+	// saturation of the PWM command?
+	if(new_cmd > 1800){new_cmd = 1800 ;} 
+	else if(new_cmd < 1377){new_cmd = 1377 ;}
+	
+	return new_cmd;
+	//
+	// return force2pwm(force);
+}
+
 int main(void)
 {
+	int tol = 2;
+	float thrust_goal = 0.0001;
+	float integral = 0;
+	int monitor_cmd;
+	
+	int ctrler_cmd = 0;//1000
 	UDP_Client_setup();
-	int PWM = 1000;
 	float sensor_data = 0.0;
+	
+	if(wiringPiSetup() == -1) { //when initialize wiringPi failed, print message to screen
+		printf("setup wiringPi failed !\n");
+	}
+	
+	pinMode(LedPin, OUTPUT);
+	digitalWrite(LedPin, LOW);   //led off IF ANODE CONNECTION
+	
+	int T_on = 50000; // constant
+	int led_counter = 0;
+
+	
 	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
-	for(int i = 0; i < 5; i++){ // send 5 times
-		request_PWM_and_SENSOR(&PWM, &sensor_data);
-		Monitor(PWM, sensor_data);
-		printf("%d, %.12f", PWM, sensor_data);
+	for(int i = 0; i < 100000; i++){ // send 5 times
+		request_PWM_and_SENSOR(&ctrler_cmd, &sensor_data);
+		
+		monitor_cmd = Controller(thrust_goal, sensor_data, &integral);
+		
+		if( abs( ctrler_cmd - monitor_cmd ) > tol ){
+			printf("Warning: divegence between Con (%d) and Mon (%d)\n", ctrler_cmd, monitor_cmd);
+			led_counter++;	
+		}
+		else{
+			printf("Con and Mon are coherent\n");
+		}
+		
+		// leave the LED ON for a few iterations to be seen
+		if( led_counter > 0 && led_counter < T_on ){
+			led_counter++;
+			digitalWrite(LedPin, HIGH);   //led off IF ANODE CONNECTION
+			//delay(1000);			     // wait 2 sec
+		}
+		else if( led_counter == T_on){
+			led_counter = 0;
+			digitalWrite(LedPin, LOW);  //led on IF ANODE CONNECTION
+		}
+		
+		//printf("%d, %.12f", ctrler_cmd, sensor_data);
 	}
 	close(fd);
 	return 0;

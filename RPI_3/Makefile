@@ -6,7 +6,7 @@ CFLAGS = -g
 all: RPI_3
 
 RPI_3: RPI_3.o 
-	$(CC) -o RPI_3 RPI_3.o $(LIBS)
+	$(CC) -o RPI_3 RPI_3.o -lwiringPi $(LIBS)
 
 RPI_3.o: RPI_3.c port.h
 

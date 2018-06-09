@@ -111,24 +111,41 @@ int force2pwm(float force){
 	return 1000;
 }
 
-int Controller(float sensor_data){
-	float force = 0;
+int Controller(float thrust_goal, float meas_thrust, float* integral){
+	// float force = 0;
 	// PID controller
+	float Kp = 1000; // to tune
+	float Ki = 1000; // to tune
 	
+	float error = thrust_goal - meas_thrust; 
+	
+	*integral = *integral + error;
+	
+	int new_cmd = 1377 + (int) (Kp * error + Ki * *integral + 0.5); //round + offset: 1378 correspnds to the value above which the PWM signals makes the rotor rotate
+	// saturation of the PWM command
+	if(new_cmd > 1800){new_cmd = 1800 ;} 
+	else if(new_cmd < 1377){new_cmd = 1377 ;}
+	
+	return new_cmd;
 	//
-	return force2pwm(force);
+	// return force2pwm(force);
 }
 
 int main(void)
 {
+	float thrust_goal = 0.0001;
+	float integral = 0;
+	
 	UDP_Client_setup();
-	int PWM = 1000;
+	int PWM = 0; //1000;
 	float sensor_data = 0.0;
-	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
-	for(int i = 0; i < 5; i++){ // send 5 times
+	while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
+	//for(int i = 0; i < 200; i++){ //
 		sensor_data = send_PWM_request_SENSOR(PWM);
-		PWM = Controller(sensor_data);
-		printf("%.12f", sensor_data);
+		PWM = Controller(thrust_goal, sensor_data, &integral);
+		
+		printf("CMD = %d   | | ", PWM);
+		printf("Measured thrust = %f\n", sensor_data);
 	}
 	close(fd);
 	return 0;
