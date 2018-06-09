@@ -309,6 +309,7 @@ int main() {
 	
 	extern double output_voltage;
 	extern int itr;
+	int i = 0;
 	while(1){
 		// For switching between each channel
 		//if(itr == 1){
@@ -329,8 +330,15 @@ int main() {
 					//goto error;				
 			//}
 		//}
-		rewind(fp);
-		fprintf(fp, "%.12f", output_voltage);
+		if(i == 10000){
+			rewind(fp);
+			i = 0;
+		}
+		fprintf(fp, "%.12f\n", output_voltage);
+		i++;
+		
+		//rewind(fp);
+		//fprintf(fp, "%.12f", output_voltage);
 	};
 	fclose(fp);
 	

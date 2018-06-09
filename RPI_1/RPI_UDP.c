@@ -89,21 +89,21 @@ int main(int argc, char **argv)
 		}
 		else
 			printf("uh oh - something went wrong!\n");
-		
-		//printf("received message: \"%s\n", buf);
+
+		printf("bbb\n");
 		f_sensor = fopen("sensor.txt","r");
-		fgets(str, MAXCHAR, f_sensor);
+		if(f_sensor == NULL){
+			printf("Error opening file sensor.txt");
+		}else{
+			memset(str, '\0', sizeof(str));
+			fgets(str, MAXCHAR, f_sensor);			
+		}
 		close(f_sensor);
-		
-		//printf("a %c\n", buf[0]);
-		
-		//memset(str_pwm, '\0', sizeof(str_pwm));
-		//strncpy(str_pwm, str+2, 4);		
-		//printf("b %s c\n", str_pwm);
 		
 		if(buf[0] == RPI_CONTROLLER){
 			rpi_num = RPI_CONTROLLER;
 			memset(str_pwm, '\0', sizeof(str_pwm));
+			printf("aaa\n");
 			strncpy(str_pwm, buf+2, 4);
 			printf("%s, %s\n", str_pwm, str);
 			sprintf(buf, "%s", str);
