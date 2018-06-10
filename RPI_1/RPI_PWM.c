@@ -19,7 +19,7 @@
 #define MIN_DATA 900
 #define MAX_DATA 1800
 int direction = 1;
-int data = 1350;
+int data = 1300;
 
 int PWM_setup(){
 	if (!bcm2835_init())
@@ -30,7 +30,7 @@ int PWM_setup(){
     bcm2835_pwm_set_mode(PWM_CHANNEL, 1, 1);
     bcm2835_pwm_set_range(PWM_CHANNEL, RANGE);
     bcm2835_pwm_set_data(PWM_CHANNEL, MIN_DATA);
-    //bcm2835_delay(8000); //wait for a motor to be initialized
+    bcm2835_delay(8000); //wait for a motor to be initialized
     
     return 0;
 }
@@ -40,14 +40,14 @@ void PWM_send(int PWM){
 	extern int direction;
 	extern int data;
 	//bcm2835_pwm_set_data(PWM_CHANNEL, 1378); //motor starts at 1378
-	if (data == MIN_DATA)
+	if (data == 1350)
 	    direction = 1;   // Switch to increasing
-	else if (data == MAX_DATA)
+	else if (data == 1400)
 	    direction = -1;  // Switch to decreasing
 	data += direction;
 	bcm2835_pwm_set_data(PWM_CHANNEL, data);
-	//printf("%d\n", data);
-	bcm2835_delay(1);
+	printf("%d\n", data);
+	bcm2835_delay(100);
 	/* End for Testing PWM */
 }
 
@@ -62,10 +62,14 @@ int main(int argc, char **argv)
 	int PWM = 1000;
 	
 	while(1){
-		f_sensor = fopen("sensor.txt","r");
-		fgets(str_pwm, MAXCHAR, f_sensor);
-		close(f_sensor);
-		PWM = atoi(f_sensor);
+		f_sensor = fopen("pwm.txt","r");
+		if(f_sensor == NULL){
+			printf("Error opening file pwm.txt");
+		}else{
+			fgets(str_pwm, MAXCHAR, f_sensor);
+		}
+		fclose(f_sensor);
+		PWM = atoi(str_pwm);
 		PWM_send(PWM);		
 	}
 	return 0;

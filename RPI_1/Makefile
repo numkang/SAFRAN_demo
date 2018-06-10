@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS = -g -ggdb3 -Wall
 LIBS=-lphidget22 -lbcm2835 -lpthread 
 
-all: RPI_PWM RPI_UDP RPI_SENSOR
+all: RPI_PWM RPI_UDP RPI_SENSOR RPI_SENSOR_PWM
 
 RPI_UDP: RPI_UDP.o 
 	$(CC) -o RPI_UDP RPI_UDP.o ${LIBS} ${CFLAGS}
@@ -12,12 +12,17 @@ RPI_PWM: RPI_PWM.o
 	
 RPI_SENSOR: RPI_SENSOR.o 
 	$(CC) -o RPI_SENSOR RPI_SENSOR.o ${LIBS} ${CFLAGS} PhidgetHelperFunctions.c PhidgetHelperFunctions.h
+	
+RPI_SENSOR_PWM: RPI_SENSOR_PWM.o 
+	$(CC) -o RPI_SENSOR_PWM RPI_SENSOR_PWM.o ${LIBS} ${CFLAGS} PhidgetHelperFunctions.c PhidgetHelperFunctions.h
 
 RPI_UDP.o: RPI_UDP.c port.h
 
 RPI_PWM.o: RPI_PWM.c
 
-RPI_SENSOR.o: RPI_SENSOR.c 
+RPI_SENSOR.o: RPI_SENSOR.c
+
+RPI_SENSOR_PWM.o: RPI_SENSOR_PWM.c
 
 clean:
-	rm -f RPI_UDP RPI_UDP.o RPI_PWM RPI_PWM.o RPI_SENSOR RPI_SENSOR.o
+	rm -f RPI_UDP RPI_UDP.o RPI_PWM RPI_PWM.o RPI_SENSOR RPI_SENSOR.o RPI_SENSOR_PWM RPI_SENSOR_PWM.o
