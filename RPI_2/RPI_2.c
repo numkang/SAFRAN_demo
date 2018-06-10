@@ -114,8 +114,8 @@ int force2pwm(float force){
 int Controller(float thrust_goal, float meas_thrust, float* integral){
 	// float force = 0;
 	// PID controller
-	float Kp = 1000; // to tune
-	float Ki = 1000; // to tune
+	float Kp = 2; // to be tuned
+	float Ki = 1; // to be tuned
 	
 	float error = thrust_goal - meas_thrust; 
 	
@@ -123,8 +123,8 @@ int Controller(float thrust_goal, float meas_thrust, float* integral){
 	
 	int new_cmd = 1377 + (int) (Kp * error + Ki * *integral + 0.5); //round + offset: 1378 correspnds to the value above which the PWM signals makes the rotor rotate
 	// saturation of the PWM command
-	if(new_cmd > 1800){new_cmd = 1800 ;} 
-	else if(new_cmd < 1377){new_cmd = 1377 ;}
+	if(new_cmd > 1780){new_cmd = 1780;} 
+	else if(new_cmd < 1380){new_cmd = 1300 ;}
 	
 	return new_cmd;
 	//
@@ -133,7 +133,7 @@ int Controller(float thrust_goal, float meas_thrust, float* integral){
 
 int main(void)
 {
-	float thrust_goal = 0.0001;
+	float thrust_goal = 100;
 	float integral = 0;
 	
 	UDP_Client_setup();
