@@ -30,7 +30,7 @@ int PWM_setup(){
     bcm2835_pwm_set_mode(PWM_CHANNEL, 1, 1);
     bcm2835_pwm_set_range(PWM_CHANNEL, RANGE);
     bcm2835_pwm_set_data(PWM_CHANNEL, MIN_DATA);
-    bcm2835_delay(8000); //wait for a motor to be initialized
+    bcm2835_delay(10000); //wait for a motor to be initialized
     
     return 0;
 }
@@ -39,15 +39,15 @@ void PWM_send(int PWM){
 	/* For Testing PWM only */
 	extern int direction;
 	extern int data;
-	//bcm2835_pwm_set_data(PWM_CHANNEL, 1378); //motor starts at 1378
-	if (data == 1350)
+	bcm2835_pwm_set_data(PWM_CHANNEL, PWM); //motor starts at 1378
+	/*if (data == 1350)
 	    direction = 1;   // Switch to increasing
 	else if (data == 1400)
 	    direction = -1;  // Switch to decreasing
 	data += direction;
 	bcm2835_pwm_set_data(PWM_CHANNEL, data);
-	printf("%d\n", data);
-	bcm2835_delay(100);
+	printf("%d\n", data);*/
+	bcm2835_delay(1);
 	/* End for Testing PWM */
 }
 
