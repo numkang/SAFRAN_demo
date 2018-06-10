@@ -368,7 +368,7 @@ int main() {
 			fprintf(fp, "%d,%.12f\n", PWM, output_voltage);
 			i++;
 		}else if(i >= 2000 && i < 7000){
-			PWM = 1480;			
+			PWM = 1620;			
 			fprintf(fp, "%d,%.12f\n", PWM, output_voltage);
 			i++;
 		}else if(i >= 7000 && i < 9000){
