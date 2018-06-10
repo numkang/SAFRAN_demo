@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 			memset(str, '\0', sizeof(str));
 			fgets(str, MAXCHAR, f_sensor);			
 		}
-		close(f_sensor);
+		fclose(f_sensor);
 		
 		if(buf[0] == RPI_CONTROLLER){
 			rpi_num = RPI_CONTROLLER;

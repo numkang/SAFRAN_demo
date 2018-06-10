@@ -2,7 +2,47 @@
 #include <stdlib.h>
 #include <phidget22.h>
 #include "PhidgetHelperFunctions.h"
+#include <string.h>
+#include <bcm2835.h>
 
+#define MAXCHAR 5
+#define PIN RPI_GPIO_P1_12
+#define PWM_CHANNEL 0
+#define RANGE 2048
+#define MIN_DATA 900
+#define MAX_DATA 1800
+int direction = 1;
+int data = 1300;
+
+int PWM_setup(){
+	if (!bcm2835_init())
+	return 1;
+	
+	bcm2835_gpio_fsel(PIN, BCM2835_GPIO_FSEL_ALT5);
+    bcm2835_pwm_set_clock(BCM2835_PWM_CLOCK_DIVIDER_16);
+    bcm2835_pwm_set_mode(PWM_CHANNEL, 1, 1);
+    bcm2835_pwm_set_range(PWM_CHANNEL, RANGE);
+    bcm2835_pwm_set_data(PWM_CHANNEL, MIN_DATA);
+    bcm2835_delay(10000); //wait for a motor to be initialized
+    printf("Finish setting up PWM\n");
+    return 0;
+}
+
+void PWM_send(int PWM){
+	/* For Testing PWM only */
+	extern int direction;
+	extern int data;
+	bcm2835_pwm_set_data(PWM_CHANNEL, PWM); //motor starts at 1378
+	/*if (data == 1300)
+	    direction = 1;   // Switch to increasing
+	else if (data == 1500)
+	    direction = -1;  // Switch to decreasing
+	data += direction;
+	bcm2835_pwm_set_data(PWM_CHANNEL, data);
+	printf("%d\n", data);*/
+	//bcm2835_delay(100);
+	/* End for Testing PWM */
+}
 
 /**
 * Configures the device's DataInterval and ChangeTrigger.
@@ -199,7 +239,7 @@ static void CCONV onVoltageRatioChangeHandler(PhidgetVoltageRatioInputHandle pvr
 	output_voltage = ratio;
 	
 	// printf("[VoltageRatio Event] -> Ratio: %.12f on channel: %c\n", ratio, chan);
-	print_data();
+	//print_data();
 }
 
 /**
@@ -257,7 +297,10 @@ static int SetVoltageRatioHandler(PhidgetVoltageRatioInputHandle pvrih, PhidgetV
 * @return 0 if the program exits successfully, 1 if it exits with errors.
 */
 int main() {
-	FILE *fp = fopen("sensor.txt","w");
+	PWM_setup();
+	delay(1000);
+	
+	FILE *fp = fopen("sensor_PWM.txt","w");
 	if(fp == NULL){
 		printf("Error opening file");
 	}
@@ -304,41 +347,44 @@ int main() {
 
 	if (OpenPhidgetChannel_waitForAttach((PhidgetHandle)ch, 5000))
 		goto error;
-
-	// printf("Sampling data for 10 seconds...\n");
+	
+	printf("Finish setting up Sensor\n");
+	delay(1000);
 	
 	extern double output_voltage;
 	extern int itr;
 	int i = 0;
+	int PWM = 1300;
+	
+	printf("Ready...\n");
+	delay(3000);
+	printf("GO!\n");
+	delay(1000);
 	while(1){
-		// For switching between each channel
-		//if(itr == 1){
-			//itr = 0;
-			//if(chan == '0'){
-				//chan = '1';
-				//ClosePhidgetChannel((PhidgetHandle)ch);
-				//if (SetChannel((PhidgetHandle)ch, chan))
-					//goto error;
-				//if (OpenPhidgetChannel((PhidgetHandle)ch))
-					//goto error;
-			//}else if(chan == '1'){
-				//chan = '0';
-				//ClosePhidgetChannel((PhidgetHandle)ch);
-				//if (SetChannel((PhidgetHandle)ch, chan))
-					//goto error;
-				//if (OpenPhidgetChannel((PhidgetHandle)ch))
-					//goto error;				
-			//}
-		//}
-		/*if(i == 10000){
-			rewind(fp);
-			i = 0;
-		}
-		fprintf(fp, "%.12f\n", output_voltage);
-		i++;*/
 		
-		rewind(fp);
-		fprintf(fp, "%.12f", output_voltage);
+		//step input
+		if(i < 2000){
+			PWM = 1300;			
+			fprintf(fp, "%d,%.12f\n", PWM, output_voltage);
+			i++;
+		}else if(i >= 2000 && i < 7000){
+			PWM = 1480;			
+			fprintf(fp, "%d,%.12f\n", PWM, output_voltage);
+			i++;
+		}else if(i >= 7000 && i < 9000){
+			PWM = 1300;			
+			fprintf(fp, "%d,%.12f\n", PWM, output_voltage);
+			i++;
+		}else{
+			PWM = MIN_DATA;
+			fclose(fp);
+		}
+		
+		//printf("%d,%d\n",i,PWM);
+		PWM_send(PWM);
+		
+		//delay(1);	
+		bcm2835_delay(1);
 	};
 	fclose(fp);
 	
