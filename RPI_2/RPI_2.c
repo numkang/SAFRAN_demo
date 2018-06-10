@@ -137,11 +137,16 @@ int main(void)
 	float integral = 0;
 	
 	UDP_Client_setup();
-	int PWM = 0; //1000;
-	float sensor_data = 0.0;
+	int PWM = 1300; //1000;
+	float sensor_data = 0.0, filtered_sensor_data = 0.0, p_sensor_data = 0.0, alpha = 0.98;
+	
+	sensor_data = send_PWM_request_SENSOR(PWM);
 	while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
 	//for(int i = 0; i < 200; i++){ //
+		p_sensor_data = sensor_data;
 		sensor_data = send_PWM_request_SENSOR(PWM);
+		filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
+		
 		PWM = Controller(thrust_goal, sensor_data, &integral);
 		
 		printf("CMD = %d   | | ", PWM);
