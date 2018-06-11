@@ -164,7 +164,7 @@ int main(void)
 	
 		//p_sensor_data = sensor_data;
 		sensor_data = send_PWM_request_SENSOR(PWM, &start_flag);// - offset;
-		//filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
+		filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
 		filtered_sensor_data = sensor_data;
 		thrust_measure = (186689.069*sensor_data - 13.540); //newton
 		
