@@ -19,6 +19,7 @@
 #define BUFLEN 2048
 #define MSGS 3	/* number of messages to send */
 #define RPI_NUM 2
+#define MAXCHAR 100
 
 struct sockaddr_in myaddr, remaddr;
 int fd, i, slen=sizeof(remaddr);
@@ -82,13 +83,15 @@ int UDP_Client_setup(){
 	return 0;
 }
 
-float send_PWM_request_SENSOR(int PWM){
+float send_PWM_request_SENSOR(int PWM, int *start_flag){
 	extern struct sockaddr_in myaddr, remaddr;
 	extern int fd, i, slen;
 	extern char buf[BUFLEN];	/* message buffer */
 	extern int recvlen;		/* # bytes in acknowledgement message */
 	extern char *server;
 	float sensor_data = 0.0;
+	char str_start[1];
+	char str_sensor[MAXCHAR];
 	
 	//printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
 	sprintf(buf, "%d,%d", RPI_NUM, PWM);
@@ -102,7 +105,12 @@ float send_PWM_request_SENSOR(int PWM){
         buf[recvlen] = 0;	/* expect a printable string - terminate it */
         //printf("received message: \"%s\"\n", buf);
     }
-    sensor_data = atof(buf);
+    strncpy(str_start, buf, 1);
+    strcpy(str_sensor, buf+2);
+    //printf("start: %s\n",str_start);
+    //printf("start: %s\n",str_sensor);
+    *start_flag = str_start[0] - 48; //atoi(str_start);
+    sensor_data = atof(str_sensor);
     return sensor_data;
 }
 
@@ -122,7 +130,7 @@ int Controller(float thrust_goal, float meas_thrust, float* integral){
 	if(pwm_command > 1780){pwm_command = 1780;}
 	else if(pwm_command < 1380){pwm_command = 1300 ;}
 	
-	printf("%f, %d ", thrust_cmd, pwm_command);
+	//printf("%f, %d ", thrust_cmd, pwm_command);
 	
 	return pwm_command;
 }
@@ -134,7 +142,7 @@ int main(void)
 		printf("Error opening file");
 	}
 	
-	
+	int start_flag = 0;
 	float thrust_goal = 3.0; //newton
 	float thrust_measure = 0.0;
 	float integral = 0;
@@ -143,7 +151,7 @@ int main(void)
 	int PWM = 1300; //1000;
 	float sensor_data = 0.0, filtered_sensor_data = 0.0, p_sensor_data = 0.0, alpha = 0.98;
 	
-	sensor_data = send_PWM_request_SENSOR(PWM);
+	sensor_data = send_PWM_request_SENSOR(PWM, &start_flag);
 	int avg_num = 100000;
 	float sensor_data_sum = 0.0, offset = 0.0;;
 	for(int i = 0; i < avg_num; i++){
@@ -155,16 +163,22 @@ int main(void)
 	//for(int i = 0; i < 200; i++){ //
 	
 		//p_sensor_data = sensor_data;
-		sensor_data = send_PWM_request_SENSOR(PWM);// - offset;
+		sensor_data = send_PWM_request_SENSOR(PWM, &start_flag);// - offset;
 		//filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
 		filtered_sensor_data = sensor_data;
 		thrust_measure = (186689.069*sensor_data - 13.540); //newton
 		
-		PWM = Controller(thrust_goal, thrust_measure, &integral);
+		//PWM = Controller(thrust_goal, thrust_measure, &integral);
 		
-		//printf("CMD = %d   | | ", PWM);
-		printf("Measured thrust = %f\n", thrust_measure);
-		fprintf(f_thrust, "%.12f\n", thrust_measure);
+		if(start_flag > 0){
+			PWM = Controller(thrust_goal, thrust_measure, &integral);
+			fprintf(f_thrust, "%.12f\n", thrust_measure);
+		}else{
+			PWM = 1300;
+		}
+		
+		printf("CMD = %d | | ", PWM);
+		printf("Start: %d, Measured thrust = %f\n", start_flag, thrust_measure);
 	}
 	close(fd);
 	return 0;

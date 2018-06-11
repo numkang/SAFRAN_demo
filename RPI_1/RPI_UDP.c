@@ -66,6 +66,19 @@ int main(int argc, char **argv)
 	extern int msgcnt;			/* count # of messages we received */
 	extern unsigned char buf[BUFSIZE];	/* receive buffer */
 	
+	FILE *f_log = fopen("start_logging.txt","w");
+	if(f_log == NULL){
+		printf("Error opening file start_logging.txt");
+	}
+	fprintf(f_log, "0");
+	fclose(f_log);
+	
+	f_log = fopen("start_logging.txt","r");
+	if(f_log == NULL){
+		printf("Error opening file start_logging.txt");
+	}
+	char str_start[2];
+	
 	FILE *f_PWM = fopen("pwm.txt","w");
 	if(f_PWM == NULL){
 		printf("Error opening file pwm.txt");
@@ -100,13 +113,25 @@ int main(int argc, char **argv)
 		}
 		fclose(f_sensor);
 		
+		f_log = fopen("start_logging.txt","r");
+		if(f_log == NULL){
+			printf("Error opening file start_logging.txt");
+		}else{
+			memset(str_start, '\0', sizeof(str_start));
+			fgets(str_start, 2, f_log);		
+		}
+		fclose(f_log);
+		
 		if(buf[0] == RPI_CONTROLLER){
 			rpi_num = RPI_CONTROLLER;
 			memset(str_pwm, '\0', sizeof(str_pwm));
 			//printf("aaa\n");
 			strncpy(str_pwm, buf+2, 4);
-			printf("%s, %s\n", str_pwm, str);
-			sprintf(buf, "%s", str);
+			if(str_start == NULL){
+				sstrcpy(str_start, "0", 1);
+			}
+			printf("%s, %s, %s\n", str_pwm, str, str_start);
+			sprintf(buf, "%s,%s", str_start, str);
 			
 			rewind(f_PWM);
 			fprintf(f_PWM, "%s", str_pwm);

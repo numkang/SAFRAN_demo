@@ -21,6 +21,9 @@
 int direction = 1;
 int data = 1300;
 
+#define DELAY_TIME 3000
+#define OPERATING_TIME 3000
+
 int PWM_setup(){
 	if (!bcm2835_init())
 	return 1;
@@ -53,6 +56,11 @@ void PWM_send(int PWM){
 
 int main(int argc, char **argv)
 {	
+	FILE *f_log = fopen("start_logging.txt","w");
+	if(f_log == NULL){
+		printf("Error opening file start_logging.txt");
+	}
+	
 	FILE *f_sensor = fopen("pwm.txt","r");
 	if(f_sensor == NULL){
 		printf("Error opening file pwm.txt");
@@ -60,7 +68,7 @@ int main(int argc, char **argv)
 	char str_pwm[MAXCHAR];
 	PWM_setup();
 	int PWM = 1000;
-	unsigned long i = 0;
+	unsigned long i = 0;	
 	
 	while(1){
 		f_sensor = fopen("pwm.txt","r");
@@ -70,20 +78,29 @@ int main(int argc, char **argv)
 			fgets(str_pwm, MAXCHAR, f_sensor);
 		}
 		fclose(f_sensor);
-		PWM = atoi(str_pwm);
+		PWM = atoi(str_pwm);		
 		
-		if(i < 2000){
+		if(i < DELAY_TIME){			
+			rewind(f_log);
+			fprintf(f_log, "1");
 			PWM = 1300;
 			i++;
-		}else if(i >= 2000 && i < 32000){
-			PWM = 1481;
+		}else if(i >= DELAY_TIME && i < DELAY_TIME + OPERATING_TIME){
+			//PWM = 1481; Open Loop
+			rewind(f_log);
+			fprintf(f_log, "1");
 			i++;
-		}else if(i >= 32000 && i < 60000){
+		}else if(i >= DELAY_TIME + OPERATING_TIME && i < DELAY_TIME + OPERATING_TIME + DELAY_TIME){
+			rewind(f_log);
+			fprintf(f_log, "1");
 			PWM = 1300;
 			i++;
 		}else{
+			rewind(f_log);
+			fprintf(f_log, "0");
 			PWM = MIN_DATA;
-		}
+			fclose(f_log);	
+		}		
 		
 		//printf("%lu,%d\n",i,PWM);
 		PWM_send(PWM);
