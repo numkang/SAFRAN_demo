@@ -162,7 +162,7 @@ int main(void)
 	while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
 	//for(int i = 0; i < 200; i++){ //
 	
-		//p_sensor_data = sensor_data;
+		p_sensor_data = sensor_data;
 		sensor_data = send_PWM_request_SENSOR(PWM, &start_flag);// - offset;
 		filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
 		filtered_sensor_data = sensor_data;
