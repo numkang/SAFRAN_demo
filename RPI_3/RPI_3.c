@@ -178,7 +178,7 @@ int main(void)
 		request_PWM_and_SENSOR(&ctrler_cmd, &sensor_data, &start_flag);
 		//filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
 		filtered_sensor_data = sensor_data;
-		thrust_measure = (186689.069*sensor_data - 13.540); //newton
+		thrust_measure = (186689.069*filtered_sensor_data - 13.540); //newton
 		
 		printf("start_flag: %d\n",start_flag);
 		printf("ctrler_cmd: %d\n",ctrler_cmd);
