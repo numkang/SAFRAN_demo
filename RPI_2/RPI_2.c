@@ -15,6 +15,9 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include "port.h"
+#include <wiringPi.h>
+
+#define LedPin 16
 
 #define BUFLEN 2048
 #define MSGS 3	/* number of messages to send */
@@ -142,6 +145,14 @@ int main(void)
 		printf("Error opening file");
 	}
 	
+	// To use the button
+	if(wiringPiSetup() == -1) { //when initialize wiringPi failed, print message to screen
+		printf("setup wiringPi failed !\n");
+		return -1;
+	}
+	pinMode(LedPin, INPUT);
+    pullUpDnControl (LedPin, PUD_DOWN) ;
+	
 	int start_flag = 0;
 	float thrust_goal = 3.0; //newton
 	float thrust_measure = 0.0;
@@ -180,6 +191,10 @@ int main(void)
 			fprintf(f_thrust, "%d %.12f\n", PWM, thrust_measure);
 		}else{
 			PWM = 1300;
+		}
+		
+		if( digitalRead(LedPin) == HIGH ){ // if the button is pressed
+			PWM = 1300; // wrong value that the monitor should detect
 		}
 		
 		printf("CMD = %d | | ", PWM);
