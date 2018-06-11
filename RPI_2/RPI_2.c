@@ -66,7 +66,7 @@ int UDP_Client_setup(){
 	/* now let's send the messages */
 	
 	for (i=0; i < MSGS; i++) {
-		printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
+		//printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
 		sprintf(buf, "%d, Hello server", RPI_NUM);
 		if (sendto(fd, buf, strlen(buf), 0, (struct sockaddr *)&remaddr, slen)==-1) {
 			perror("sendto");
@@ -90,7 +90,7 @@ float send_PWM_request_SENSOR(int PWM){
 	extern char *server;
 	float sensor_data = 0.0;
 	
-	printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
+	//printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
 	sprintf(buf, "%d,%d", RPI_NUM, PWM);
 	if (sendto(fd, buf, strlen(buf), 0, (struct sockaddr *)&remaddr, slen)==-1) {
 		perror("sendto");
@@ -100,40 +100,43 @@ float send_PWM_request_SENSOR(int PWM){
 	recvlen = recvfrom(fd, buf, BUFLEN, 0, (struct sockaddr *)&remaddr, &slen);
     if (recvlen >= 0) {
         buf[recvlen] = 0;	/* expect a printable string - terminate it */
-        printf("received message: \"%s\"\n", buf);
+        //printf("received message: \"%s\"\n", buf);
     }
     sensor_data = atof(buf);
     return sensor_data;
 }
 
-int force2pwm(float force){
-	//some mapping function
-	return 1000;
-}
-
 int Controller(float thrust_goal, float meas_thrust, float* integral){
 	// float force = 0;
 	// PID controller
-	float Kp = 2; // to be tuned
-	float Ki = 1; // to be tuned
+	float Kp = 1.0; // to be tuned
+	float Ki = 0.0; // to be tuned
 	
 	float error = thrust_goal - meas_thrust; 
 	
 	*integral = *integral + error;
 	
-	int new_cmd = 1377 + (int) (Kp * error + Ki * *integral + 0.5); //round + offset: 1378 correspnds to the value above which the PWM signals makes the rotor rotate
+	float thrust_cmd = thrust_goal + (Kp * error + Ki * *integral); //round + offset: 1378 correspnds to the value above which the PWM signals makes the rotor rotate
 	// saturation of the PWM command
-	if(new_cmd > 1780){new_cmd = 1780;} 
-	else if(new_cmd < 1380){new_cmd = 1300 ;}
+	int pwm_command = (int)(2.5625*thrust_cmd*thrust_cmd + 32.6422*thrust_cmd + 1359.7555);
+	if(pwm_command > 1780){pwm_command = 1780;}
+	else if(pwm_command < 1380){pwm_command = 1300 ;}
 	
-	return new_cmd;
-	//
-	// return force2pwm(force);
+	printf("%f, %d ", thrust_cmd, pwm_command);
+	
+	return pwm_command;
 }
 
 int main(void)
-{
-	float thrust_goal = 100;
+{	
+	FILE *f_thrust = fopen("thrust_measure.txt","w");
+	if(f_thrust == NULL){
+		printf("Error opening file");
+	}
+	
+	
+	float thrust_goal = 3.0; //newton
+	float thrust_measure = 0.0;
 	float integral = 0;
 	
 	UDP_Client_setup();
@@ -141,16 +144,27 @@ int main(void)
 	float sensor_data = 0.0, filtered_sensor_data = 0.0, p_sensor_data = 0.0, alpha = 0.98;
 	
 	sensor_data = send_PWM_request_SENSOR(PWM);
+	int avg_num = 100000;
+	float sensor_data_sum = 0.0, offset = 0.0;;
+	for(int i = 0; i < avg_num; i++){
+		sensor_data_sum = sensor_data_sum + sensor_data;
+	}
+	offset = sensor_data_sum/avg_num;
+	
 	while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
 	//for(int i = 0; i < 200; i++){ //
-		p_sensor_data = sensor_data;
-		sensor_data = send_PWM_request_SENSOR(PWM);
-		filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
+	
+		//p_sensor_data = sensor_data;
+		sensor_data = send_PWM_request_SENSOR(PWM);// - offset;
+		//filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
+		filtered_sensor_data = sensor_data;
+		thrust_measure = (186689.069*sensor_data - 13.540); //newton
 		
-		PWM = Controller(thrust_goal, sensor_data, &integral);
+		PWM = Controller(thrust_goal, thrust_measure, &integral);
 		
-		printf("CMD = %d   | | ", PWM);
-		printf("Measured thrust = %f\n", sensor_data);
+		//printf("CMD = %d   | | ", PWM);
+		printf("Measured thrust = %f\n", thrust_measure);
+		fprintf(f_thrust, "%.12f\n", thrust_measure);
 	}
 	close(fd);
 	return 0;

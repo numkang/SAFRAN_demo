@@ -47,7 +47,7 @@ void PWM_send(int PWM){
 	data += direction;
 	bcm2835_pwm_set_data(PWM_CHANNEL, data);
 	printf("%d\n", data);*/
-	bcm2835_delay(1);
+	//bcm2835_delay(1);
 	/* End for Testing PWM */
 }
 
@@ -60,6 +60,7 @@ int main(int argc, char **argv)
 	char str_pwm[MAXCHAR];
 	PWM_setup();
 	int PWM = 1000;
+	unsigned long i = 0;
 	
 	while(1){
 		f_sensor = fopen("pwm.txt","r");
@@ -70,7 +71,25 @@ int main(int argc, char **argv)
 		}
 		fclose(f_sensor);
 		PWM = atoi(str_pwm);
-		PWM_send(PWM);		
+		
+		if(i < 2000){
+			PWM = 1300;
+			i++;
+		}else if(i >= 2000 && i < 32000){
+			//PWM = 1460;
+			i++;
+		}else if(i >= 32000 && i < 60000){
+			PWM = 1300;
+			i++;
+		}else{
+			PWM = MIN_DATA;
+		}
+		
+		//printf("%lu,%d\n",i,PWM);
+		PWM_send(PWM);
+		
+		//delay(1);	
+		bcm2835_delay(1);		
 	}
 	return 0;
 }

@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 	
 	while(1){		
 		
-		printf("waiting on port %d\n", SERVICE_PORT);
+		//printf("waiting on port %d\n", SERVICE_PORT);
 		recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
 		if (recvlen > 0) {
 			buf[recvlen] = 0;
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 		else
 			printf("uh oh - something went wrong!\n");
 
-		printf("bbb\n");
+		//printf("bbb\n");
 		f_sensor = fopen("sensor.txt","r");
 		if(f_sensor == NULL){
 			printf("Error opening file sensor.txt");
@@ -103,20 +103,20 @@ int main(int argc, char **argv)
 		if(buf[0] == RPI_CONTROLLER){
 			rpi_num = RPI_CONTROLLER;
 			memset(str_pwm, '\0', sizeof(str_pwm));
-			printf("aaa\n");
+			//printf("aaa\n");
 			strncpy(str_pwm, buf+2, 4);
 			printf("%s, %s\n", str_pwm, str);
 			sprintf(buf, "%s", str);
 			
 			rewind(f_PWM);
-			fprintf(f_PWM, "%d", str_pwm);
+			fprintf(f_PWM, "%s", str_pwm);
 		}else if(buf[0] == RPI_MONITOR){
 			rpi_num = RPI_MONITOR;
 			sprintf(buf, "%s,%s", str_pwm, str);
 		}		
 	
 		//sprintf(buf, "ack %d", msgcnt++);
-		printf("sending response \"%s\"\n", buf);
+		//printf("sending response \"%s\"\n", buf);
 		if (sendto(fd, buf, strlen(buf), 0, (struct sockaddr *)&remaddr, addrlen) < 0)
 			perror("sendto");			
 	}
