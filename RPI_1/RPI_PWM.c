@@ -22,7 +22,7 @@ int direction = 1;
 int data = 1300;
 
 #define DELAY_TIME 3000
-#define OPERATING_TIME 60000
+#define OPERATING_TIME 30000
 
 int PWM_setup(){
 	if (!bcm2835_init())
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 			PWM = 1300;
 			i++;
 		}else if(i >= DELAY_TIME && i < DELAY_TIME + OPERATING_TIME){
-			//PWM = 1481; Open Loop
+			PWM = 1481; //Open Loop
 			rewind(f_log);
 			fprintf(f_log, "1");
 			i++;
