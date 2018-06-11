@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 			PWM = 1300;
 			i++;
 		}else if(i >= 2000 && i < 32000){
-			//PWM = 1460;
+			PWM = 1481;
 			i++;
 		}else if(i >= 32000 && i < 60000){
 			PWM = 1300;
