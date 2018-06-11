@@ -22,7 +22,7 @@ int direction = 1;
 int data = 1300;
 
 #define DELAY_TIME 3000
-#define OPERATING_TIME 30000
+#define OPERATING_TIME 60000
 
 int PWM_setup(){
 	if (!bcm2835_init())
