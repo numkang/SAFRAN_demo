@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 			PWM = 1300;
 			i++;
 		}else if(i >= DELAY_TIME && i < DELAY_TIME + OPERATING_TIME){
-			PWM = 1481; //Open Loop
+			//PWM = 1481; //Open Loop
 			rewind(f_log);
 			fprintf(f_log, "1");
 			i++;
