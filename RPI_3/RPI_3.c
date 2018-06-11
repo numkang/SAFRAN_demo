@@ -149,7 +149,7 @@ int Controller(float thrust_goal, float meas_thrust, float* integral){
 int main(void)
 {	
 	int start_flag = 0;
-	int tol = 2;
+	int tol = 10; // tolerance with the value of the controller
 	float thrust_goal = 3.0;
 	float thrust_measure = 0.0;
 	float integral = 0;
@@ -167,8 +167,8 @@ int main(void)
 	pinMode(LedPin, OUTPUT);
 	digitalWrite(LedPin, LOW);   //led off IF ANODE CONNECTION
 	
-	int T_on = 50000; // constant
-	int led_counter = 0;
+	/*int T_on = 50000; // constant
+	int led_counter = 0;*/
 
 	
 	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
@@ -197,22 +197,28 @@ int main(void)
 		
 		if( abs( ctrler_cmd - monitor_cmd ) > tol ){
 			printf("Warning: divegence between Con (%d) and Mon (%d)\n", ctrler_cmd, monitor_cmd);
-			led_counter++;	
+			
+			digitalWrite(LedPin, HIGH);
+			//led_counter++;	
 		}
 		else{
 			printf("Con and Mon are coherent\n");
+			
+			digitalWrite(LedPin, LOW); 
 		}
 		
+		/*
 		// leave the LED ON for a few iterations to be seen
 		if( led_counter > 0 && led_counter < T_on ){
 			led_counter++;
-			digitalWrite(LedPin, HIGH);   //led off IF ANODE CONNECTION
-			//delay(1000);			     // wait 2 sec
+			digitalWrite(LedPin, HIGH);   
+			//delay(1000);			     // wait
 		}
 		else if( led_counter == T_on){
 			led_counter = 0;
-			digitalWrite(LedPin, LOW);  //led on IF ANODE CONNECTION
+			digitalWrite(LedPin, LOW);  
 		}
+		*/
 		
 		//printf("%d, %.12f", ctrler_cmd, sensor_data);
 	}
