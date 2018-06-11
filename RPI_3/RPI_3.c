@@ -86,17 +86,18 @@ int UDP_Client_setup(){
 	return 0;
 }
 
-void request_PWM_and_SENSOR(int *PWM, float *sensor_data){
+void request_PWM_and_SENSOR(int *PWM, float *sensor_data, int *start_flag){
 	extern struct sockaddr_in myaddr, remaddr;
 	extern int fd, i, slen;
 	extern char buf[BUFLEN];	/* message buffer */
 	extern int recvlen;		/* # bytes in acknowledgement message */
 	extern char *server;
 	char str_pwm[5];
+	char str_start[2];
 	char str_sensor[MAXCHAR];
 	
-	printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
-	sprintf(buf, "%d,%d", RPI_NUM, PWM);
+	//printf("Sending packet %d to %s port %d\n", i, server, SERVICE_PORT);
+	sprintf(buf, "%d", RPI_NUM);
 	if (sendto(fd, buf, strlen(buf), 0, (struct sockaddr *)&remaddr, slen)==-1) {
 		perror("sendto");
 		exit(1);
@@ -106,10 +107,15 @@ void request_PWM_and_SENSOR(int *PWM, float *sensor_data){
     if (recvlen >= 0) {
         buf[recvlen] = 0;	/* expect a printable string - terminate it */
         printf("received message: \"%s\"\n", buf);
-    }
-    strncpy(str_pwm, buf, 4);
-    strcpy(str_sensor, buf+5);
-    *PWM = atoi(str_pwm);
+    }    
+    strncpy(str_start, buf, 1);
+    strncpy(str_pwm, buf+2, 4);
+    strcpy(str_sensor, buf+7);
+    //printf("start: %s\n",str_start);
+    //printf("pwm: %s\n",str_pwm);
+    //printf("sensor: %s\n",str_sensor);
+    *start_flag = str_start[0] - 48; //atoi(str_start);
+    *PWM = (str_pwm[0] - '0')*1000 + (str_pwm[1] - '0')*100 + (str_pwm[2] - '0')*10 + (str_pwm[3] - '0');//atoi(str_pwm);
     *sensor_data = atof(str_sensor);
 }
 
@@ -122,33 +128,37 @@ int Monitor(int PWM, float sensor_data){
 int Controller(float thrust_goal, float meas_thrust, float* integral){
 	// float force = 0;
 	// PID controller
-	float Kp = 1000; // to tune
-	float Ki = 1000; // to tune
+	float Kp = 1.0; // to be tuned
+	float Ki = 0.0; // to be tuned
 	
 	float error = thrust_goal - meas_thrust; 
 	
 	*integral = *integral + error;
 	
-	int new_cmd = 1377 + (int) (Kp * error + Ki * *integral + 0.5); //round + offset: 1378 correspnds to the value above which the PWM signals makes the rotor rotate
-	// saturation of the PWM command?
-	if(new_cmd > 1800){new_cmd = 1800 ;} 
-	else if(new_cmd < 1377){new_cmd = 1377 ;}
+	float thrust_cmd = thrust_goal + (Kp * error + Ki * *integral); //round + offset: 1378 correspnds to the value above which the PWM signals makes the rotor rotate
+	// saturation of the PWM command
+	int pwm_command = (int)(2.5625*thrust_cmd*thrust_cmd + 32.6422*thrust_cmd + 1359.7555);
+	if(pwm_command > 1780){pwm_command = 1780;}
+	else if(pwm_command < 1380){pwm_command = 1300 ;}
 	
-	return new_cmd;
-	//
-	// return force2pwm(force);
+	//printf("%f, %d ", thrust_cmd, pwm_command);
+	
+	return pwm_command;
 }
 
 int main(void)
-{
+{	
+	int start_flag = 0;
 	int tol = 2;
-	float thrust_goal = 0.0001;
+	float thrust_goal = 3.0;
+	float thrust_measure = 0.0;
 	float integral = 0;
-	int monitor_cmd;
+	int monitor_cmd = 1300;
 	
-	int ctrler_cmd = 0;//1000
+	int ctrler_cmd = 1300;//1000
 	UDP_Client_setup();
-	float sensor_data = 0.0;
+	float sensor_data = 0.0, filtered_sensor_data = 0.0, p_sensor_data = 0.0, alpha = 0.98;
+	request_PWM_and_SENSOR(&ctrler_cmd, &sensor_data, &start_flag);
 	
 	if(wiringPiSetup() == -1) { //when initialize wiringPi failed, print message to screen
 		printf("setup wiringPi failed !\n");
@@ -162,10 +172,28 @@ int main(void)
 
 	
 	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
-	for(int i = 0; i < 100000; i++){ // send 5 times
-		request_PWM_and_SENSOR(&ctrler_cmd, &sensor_data);
+	for(int i = 0; i < 100000; i++){ // send 5 times		
 		
-		monitor_cmd = Controller(thrust_goal, sensor_data, &integral);
+		//p_sensor_data = sensor_data;
+		request_PWM_and_SENSOR(&ctrler_cmd, &sensor_data, &start_flag);
+		//filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
+		filtered_sensor_data = sensor_data;
+		thrust_measure = (186689.069*sensor_data - 13.540); //newton
+		
+		printf("start_flag: %d\n",start_flag);
+		printf("ctrler_cmd: %d\n",ctrler_cmd);
+		printf("sensor_data: %.12f\n",sensor_data);
+		
+		if(start_flag > 0 && start_flag < 2){
+			//PWM = Controller(thrust_goal, thrust_measure, &integral);
+			monitor_cmd = Controller(thrust_goal, thrust_measure, &integral);
+		}else if (start_flag >= 2){			
+			ctrler_cmd = 1300;
+			monitor_cmd = 1300;
+		}else{
+			ctrler_cmd = 1300;
+			monitor_cmd = 1300;
+		}		
 		
 		if( abs( ctrler_cmd - monitor_cmd ) > tol ){
 			printf("Warning: divegence between Con (%d) and Mon (%d)\n", ctrler_cmd, monitor_cmd);
