@@ -117,7 +117,7 @@ float send_PWM_request_SENSOR(int PWM, int *start_flag){
 int Controller(float thrust_goal, float meas_thrust, float* integral){
 	// float force = 0;
 	// PID controller
-	float Kp = 2.0; // to be tuned
+	float Kp = 3.0; // to be tuned
 	float Ki = 0.0; // to be tuned
 	
 	float error = thrust_goal - meas_thrust; 
