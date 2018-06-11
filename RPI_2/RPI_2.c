@@ -145,6 +145,7 @@ int main(void)
 	int start_flag = 0;
 	float thrust_goal = 3.0; //newton
 	float thrust_measure = 0.0;
+	float thrust_measure_plot = 0.0;
 	float integral = 0;
 	
 	UDP_Client_setup();
@@ -167,6 +168,7 @@ int main(void)
 		filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
 		filtered_sensor_data = sensor_data;
 		thrust_measure = (186689.069*filtered_sensor_data - 13.540); //newton
+		thrust_measure_plot = (186689.069*sensor_data - 13.540); //newton
 		
 		//PWM = Controller(thrust_goal, thrust_measure, &integral);
 		
@@ -181,7 +183,7 @@ int main(void)
 		}
 		
 		printf("CMD = %d | | ", PWM);
-		printf("Start: %d, Measured thrust = %f\n", start_flag, thrust_measure);
+		printf("Start: %d, Measured thrust = %f\n", start_flag, thrust_measure_plot);
 	}
 	close(fd);
 	return 0;
