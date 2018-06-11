@@ -170,9 +170,12 @@ int main(void)
 		
 		//PWM = Controller(thrust_goal, thrust_measure, &integral);
 		
-		if(start_flag > 0){
+		if(start_flag > 0 && start_flag < 2){
 			PWM = Controller(thrust_goal, thrust_measure, &integral);
-			fprintf(f_thrust, "%.12f\n", thrust_measure);
+			fprintf(f_thrust, "%d,%.12f\n", PWM, thrust_measure);
+		}else if (start_flag >= 2){
+			PWM = 1300;
+			fprintf(f_thrust, "%d,%.12f\n", PWM, thrust_measure);
 		}else{
 			PWM = 1300;
 		}
