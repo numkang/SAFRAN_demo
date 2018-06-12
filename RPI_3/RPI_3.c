@@ -171,8 +171,8 @@ int main(void)
 	int led_counter = 0;*/
 
 	
-	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
-	for(int i = 0; i < 100000; i++){ // send 5 times		
+	while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
+	//for(int i = 0; i < 100000; i++){ // send 5 times		
 		
 		p_sensor_data = sensor_data;
 		request_PWM_and_SENSOR(&ctrler_cmd, &sensor_data, &start_flag);
