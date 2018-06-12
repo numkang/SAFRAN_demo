@@ -128,7 +128,7 @@ int Monitor(int PWM, float sensor_data){
 int Controller(float thrust_goal, float meas_thrust, float* integral){
 	// float force = 0;
 	// PID controller
-	float Kp = 1.0; // to be tuned
+	float Kp = 3.0; // to be tuned
 	float Ki = 0.0; // to be tuned
 	
 	float error = thrust_goal - meas_thrust; 
@@ -174,9 +174,9 @@ int main(void)
 	//while(1){ // should be set to send message in every ... second so that it won't be a conflict with another RPI
 	for(int i = 0; i < 100000; i++){ // send 5 times		
 		
-		//p_sensor_data = sensor_data;
+		p_sensor_data = sensor_data;
 		request_PWM_and_SENSOR(&ctrler_cmd, &sensor_data, &start_flag);
-		//filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
+		filtered_sensor_data = alpha*(p_sensor_data) + (1 - alpha)*sensor_data; //complementary filter
 		filtered_sensor_data = sensor_data;
 		thrust_measure = (186689.069*filtered_sensor_data - 13.540); //newton
 		
