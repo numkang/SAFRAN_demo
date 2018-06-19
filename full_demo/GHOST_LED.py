@@ -18,7 +18,7 @@ GPIO.setup(GREEN_LED, GPIO.OUT)
 GPIO.setup(BLUE_LED,  GPIO.OUT)
 
 while True:
-	# RED node
+	"""# RED node
 	GPIO.output(RED_LED,   GPIO.HIGH)
 	GPIO.output(GREEN_LED, GPIO.LOW)
 	GPIO.output(BLUE_LED,  GPIO.LOW)
@@ -40,7 +40,7 @@ while True:
 	GPIO.output(BLUE_LED,  GPIO.HIGH)
 
 	# Wait 1 seconds
-	time.sleep(1)
+	time.sleep(1)"""
 
 	# GHOST node
 	GPIO.output(RED_LED,   GPIO.HIGH)
