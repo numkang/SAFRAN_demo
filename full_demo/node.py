@@ -27,8 +27,8 @@ def on_log_func(client, userdata, level, string):
 	pass
 # end callback function
 
-broker_address = "139.162.123.182" # broker IP address
-client = mqtt.Client("rpi_node_1") # client's name
+broker_address = "128.61.62.222" # broker IP address 139.162.123.182 (someone's else)
+client = mqtt.Client("rpi_node_0") # client's name
 
 # binding callback function
 client.on_connect     = on_connect_func
@@ -44,7 +44,7 @@ client.connect(broker_address) # connect to a broker
 client.subscribe(topic = "reconfig", qos = 0) # subscribe to all nodes
 
 while True:
-	client.publish(topic = "rpi/1", payload = "rpi_1", qos = 0, retain = False)
+        client.publish(topic = "rpi/0", payload = "rpi_0", qos = 0, retain = False)
 		
 	client.loop_start() # loop to enable callback functions	
 	client.loop_stop()

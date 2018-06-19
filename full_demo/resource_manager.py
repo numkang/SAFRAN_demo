@@ -27,7 +27,7 @@ def on_log_func(client, userdata, level, string):
 	pass
 # end callback function
 
-broker_address = "139.162.123.182" # broker IP address
+broker_address = "128.61.62.222" # broker IP address 139.162.123.182 (someone's else)
 client = mqtt.Client("resource_manager") # client's name
 
 # binding callback function
