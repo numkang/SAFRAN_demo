@@ -27,24 +27,29 @@ def on_log_func(client, userdata, level, string):
 	pass
 # end callback function
 
-broker_address = "128.61.62.222" # broker IP address 139.162.123.182 (someone's else)
-client = mqtt.Client("resource_manager") # client's name
+# main loop
+def main():
 
-# binding callback function
-client.on_connect     = on_connect_func
-client.on_disconnect  = on_disconnect_func
-client.on_subscribe   = on_subscribe_func
-client.on_unsubscribe = on_unsubscribe_func
-client.on_publish     = on_publish_func
-client.on_message     = on_message_func
-client.on_log         = on_log_func
+	# Communication Setup
+	broker_address = "128.61.62.222" # broker IP address 139.162.123.182 (someone's else)
+	client = mqtt.Client("resource_manager") # client's name
 
-client.connect(broker_address) # connect to a broker
+	# binding callback function
+	client.on_connect     = on_connect_func
+	client.on_disconnect  = on_disconnect_func
+	client.on_subscribe   = on_subscribe_func
+	client.on_unsubscribe = on_unsubscribe_func
+	client.on_publish     = on_publish_func
+	client.on_message     = on_message_func
+	client.on_log         = on_log_func
 
-client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
+	client.connect(broker_address) # connect to a broker
 
-while True:
-	client.publish(topic = "reconfig", payload = "reconfig_output", qos = 0, retain = False)
+	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
+
+	while True:
+		client.publish(topic = "reconfig", payload = "reconfig_output", qos = 0, retain = False)
 		
-	client.loop_start() # loop to enable callback functions	
-	client.loop_stop()
+		client.loop_start() # loop to enable callback functions	
+		client.loop_stop()
+main()
