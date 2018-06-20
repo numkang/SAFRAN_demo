@@ -2,7 +2,7 @@ import subprocess
 
 RPI_ID = -1
 
-def get_IP():
+def get_ID():
     global RPI_ID
     ips = subprocess.check_output(['hostname', '--all-ip-addresses'])
     ind = ips.index(" ")
@@ -11,5 +11,5 @@ def get_IP():
     else:
        RPI_ID = int(ips[ind-1]) - 2       
 
-get_IP()
+get_ID()
 print(RPI_ID)

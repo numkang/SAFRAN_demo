@@ -1,5 +1,17 @@
 import paho.mqtt.client as mqtt
 import time
+import subprocess
+
+RPI_ID = -1
+
+def get_ID():
+    global RPI_ID
+    ips = subprocess.check_output(['hostname', '--all-ip-addresses'])
+    ind = ips.index(" ")
+    if(ips[ind-2] != "."):
+       RPI_ID = int(ips[ind-2:ind-1]) - 2
+    else:
+       RPI_ID = int(ips[ind-1]) - 2
 
 # callback function
 def on_connect_func(client, userdata, flags, rc):
@@ -29,9 +41,11 @@ def on_log_func(client, userdata, level, string):
 
 # main loop
 def main():
+        global RPI_ID
+        get_ID()
 
 	# Communication Setup
-	broker_address = "128.61.62.222" # broker IP address 139.162.123.182 (someone's else)
+	broker_address = "192.168.0.2" # broker IP address 139.162.123.182 (someone's else)
 	client = mqtt.Client("resource_manager") # client's name
 
 	# binding callback function
@@ -48,7 +62,7 @@ def main():
 	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
 
 	while True:
-		client.publish(topic = "reconfig", payload = "reconfig_output", qos = 0, retain = False)
+		client.publish(topic = "resource_manager", payload = "reconfig_output", qos = 0, retain = False)
 		
 		client.loop_start() # loop to enable callback functions	
 		client.loop_stop()

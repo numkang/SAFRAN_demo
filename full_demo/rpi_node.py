@@ -5,7 +5,7 @@ import subprocess
 import threading
 import time
 
-app = np.array(['RED_LED', 'GREEN_LED', 'BLUE_LED', 'RGB_GPIO', 'OFF_LED'])
+app = np.array(['RED_LED.py', 'GREEN_LED.py', 'BLUE_LED.py', 'RGB_GPIO.py', 'OFF_LED.py'])
 
 switch_button = 40
 GPIO.setmode(GPIO.BOARD)
@@ -16,6 +16,17 @@ kill_flag = False
 is_killed = True
 is_alive = '1'
 proc = subprocess.Popen(['python', "empty.py"])
+
+RPI_ID = -1
+
+def get_ID():
+    global RPI_ID
+    ips = subprocess.check_output(['hostname', '--all-ip-addresses'])
+    ind = ips.index(" ")
+    if(ips[ind-2] != "."):
+       RPI_ID = int(ips[ind-2:ind-1]) - 2
+    else:
+       RPI_ID = int(ips[ind-1]) - 2
 
 # Define callback function
 def on_connect_func(client, userdata, flags, rc):
@@ -92,15 +103,18 @@ def call_func(threadName):
     
     while True:
         if(kill_flag == False and is_killed == True):
-            proc.kill()
-            proc.wait()
+            try:
+                proc.kill()
+                proc.wait()
+            except:
+                pass
             proc = subprocess.Popen(['python', app[3]]) #app to be run
             time.sleep(0.2)
             is_killed = False
         elif(kill_flag == True and is_killed == False):
             proc.kill()
             proc.wait()
-            proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
+            proc = subprocess.Popen(['python', app[len(app) - 1]]) #app to clean up the running app
             time.sleep(0.2)
             proc.kill()
             proc.wait()
@@ -110,10 +124,14 @@ def call_func(threadName):
 # main loop
 def main():
     global is_alive
+    global RPI_ID
+    get_ID()
 
     # Communication Setup
-    broker_address = "128.61.62.222" # broker IP address 139.162.123.182 (someone's else)
-    client = mqtt.Client("rpi_node_0") # client's name
+    broker_address = "192.168.0.2" # broker IP address 139.162.123.182 (someone's else)
+    client_name = "rpi_node_" + str(RPI_ID)
+    client_topic = "rpi/" + str(RPI_ID)
+    client = mqtt.Client(client_name) # client's name
 
     # binding callback function
     client.on_connect     = on_connect_func
@@ -124,9 +142,9 @@ def main():
     client.on_message     = on_message_func
     client.on_log         = on_log_func
 
-    client.connect(broker_address) # connect to a broker
+    #client.connect(broker_address) # connect to a broker
 
-    client.subscribe(topic = "reconfig", qos = 0) # subscribe to all nodes
+    #client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
 
     # Threading Setup
     thread_switch = myThread(1, "switch_button_thread")
@@ -136,9 +154,11 @@ def main():
     thread_led.start()
 
     while True:
-        client.publish(topic = "rpi/0", payload = is_alive, qos = 0, retain = False)
+        print(is_alive)
+        time.sleep(0.5)
+        #client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
 		
-        client.loop_start() # loop to enable callback functions	
-        client.loop_stop()
+        #client.loop_start() # loop to enable callback functions	
+        #client.loop_stop()
         pass
 main()
