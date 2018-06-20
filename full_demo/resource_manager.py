@@ -52,4 +52,5 @@ def main():
 		
 		client.loop_start() # loop to enable callback functions	
 		client.loop_stop()
+		pass
 main()
