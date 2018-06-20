@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import time
 import subprocess
+import sys
 
 RPI_ID = -1
 
@@ -41,11 +42,12 @@ def on_log_func(client, userdata, level, string):
 
 # main loop
 def main():
+    try:
         global RPI_ID
         get_ID()
 
 	# Communication Setup
-	broker_address = "192.168.0.2" # broker IP address 139.162.123.182 (someone's else)
+	broker_address = "192.168.0.2" # broker IP address
 	client = mqtt.Client("resource_manager") # client's name
 
 	# binding callback function
@@ -67,4 +69,7 @@ def main():
 		client.loop_start() # loop to enable callback functions	
 		client.loop_stop()
 		pass
+    except KeyboardInterrupt:
+        print "Exit"
+        sys.exit(1)
 main()

@@ -4,6 +4,7 @@ import paho.mqtt.client as mqtt
 import subprocess
 import threading
 import time
+import sys
 
 app = np.array(['RED_LED.py', 'GREEN_LED.py', 'BLUE_LED.py', 'RGB_GPIO.py', 'OFF_LED.py'])
 
@@ -123,42 +124,45 @@ def call_func(threadName):
 
 # main loop
 def main():
-    global is_alive
-    global RPI_ID
-    get_ID()
+    try:
+        global is_alive
+        global RPI_ID
+        get_ID()
 
-    # Communication Setup
-    broker_address = "192.168.0.2" # broker IP address 139.162.123.182 (someone's else)
-    client_name = "rpi_node_" + str(RPI_ID)
-    client_topic = "rpi/" + str(RPI_ID)
-    client = mqtt.Client(client_name) # client's name
+        # Communication Setup
+        broker_address = "192.168.0.2" # broker IP address
+        client_name = "rpi_node_" + str(RPI_ID)
+        client_topic = "rpi/" + str(RPI_ID)
+        client = mqtt.Client(client_name) # client's name
 
-    # binding callback function
-    client.on_connect     = on_connect_func
-    client.on_disconnect  = on_disconnect_func
-    client.on_subscribe   = on_subscribe_func
-    client.on_unsubscribe = on_unsubscribe_func
-    client.on_publish     = on_publish_func
-    client.on_message     = on_message_func
-    client.on_log         = on_log_func
+        # binding callback function
+        client.on_connect     = on_connect_func
+        client.on_disconnect  = on_disconnect_func
+        client.on_subscribe   = on_subscribe_func
+        client.on_unsubscribe = on_unsubscribe_func
+        client.on_publish     = on_publish_func
+        client.on_message     = on_message_func
+        client.on_log         = on_log_func
 
-    #client.connect(broker_address) # connect to a broker
+        client.connect(broker_address) # connect to a broker
 
-    #client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
+        client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
 
-    # Threading Setup
-    thread_switch = myThread(1, "switch_button_thread")
-    thread_switch.start()
+        # Threading Setup
+        thread_switch = myThread(1, "switch_button_thread")
+        thread_switch.start()
 
-    thread_led = myThread(2, "LED_thread")
-    thread_led.start()
+        thread_led = myThread(2, "LED_thread")
+        thread_led.start()
 
-    while True:
-        print(is_alive)
-        time.sleep(0.5)
-        #client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
+        while True:
+            print(is_alive)
+            client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
 		
-        #client.loop_start() # loop to enable callback functions	
-        #client.loop_stop()
-        pass
+            client.loop_start() # loop to enable callback functions	
+            client.loop_stop()
+            pass
+    except KeyboardInterrupt:
+        print "Exit"
+        sys.exit(1)
 main()
