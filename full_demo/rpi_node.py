@@ -4,8 +4,6 @@ import subprocess
 import threading
 import time
 
-RPI_NODE = 1
-
 GPIO.setmode(GPIO.BOARD)
 switch_button = 40
 GPIO.setup(switch_button, GPIO.IN, pull_up_down = GPIO.PUD_UP)
@@ -107,7 +105,7 @@ def main():
 
     # Communication Setup
     broker_address = "128.61.62.222" # broker IP address 139.162.123.182 (someone's else)
-    client = mqtt.Client("rpi_node_1") # client's name
+    client = mqtt.Client("rpi_node_0") # client's name
 
     # binding callback function
     client.on_connect     = on_connect_func
@@ -132,7 +130,7 @@ def main():
     while True:
         client.publish(topic = "rpi/0", payload = "rpi_0", qos = 0, retain = False)
 		
-	client.loop_start() # loop to enable callback functions	
-	client.loop_stop()
+        client.loop_start() # loop to enable callback functions	
+        client.loop_stop()
         pass
 main()
