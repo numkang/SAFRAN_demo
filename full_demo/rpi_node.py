@@ -115,7 +115,7 @@ def call_func(threadName):
         elif(kill_flag == True and is_killed == False):
             proc.kill()
             proc.wait()
-            proc = subprocess.Popen(['python', app[len(app) - 1]]) #app to clean up the running app
+            proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
             time.sleep(0.2)
             proc.kill()
             proc.wait()
@@ -124,6 +124,7 @@ def call_func(threadName):
 
 # main loop
 def main():
+    global proc
     try:
         global is_alive
         global RPI_ID
@@ -164,5 +165,6 @@ def main():
             pass
     except KeyboardInterrupt:
         print "Exit"
+        proc.kill()
         sys.exit(1)
 main()
