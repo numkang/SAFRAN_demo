@@ -16,6 +16,7 @@ input_state = GPIO.input(switch_button)
 kill_flag = False
 is_killed = True
 is_alive = '1'
+is_exit = 0
 proc = subprocess.Popen(['python', "empty.py"])
 
 RPI_ID = -1
@@ -113,18 +114,20 @@ def call_func(threadName):
             time.sleep(0.2)
             is_killed = False
         elif(kill_flag == True and is_killed == False):
-            proc.kill()
-            proc.wait()
+            try:
+                proc.kill()
+                proc.wait()
+            except:
+                pass
             proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
             time.sleep(0.2)
-            proc.kill()
-            proc.wait()
             is_killed = True
 # End define a function for the thread
 
 # main loop
 def main():
     global proc
+    global is_exit
     try:
         global is_alive
         global RPI_ID
@@ -162,9 +165,15 @@ def main():
 		
             client.loop_start() # loop to enable callback functions	
             client.loop_stop()
+
+            is_exit = 0
             pass
     except KeyboardInterrupt:
-        print "Exit"
-        proc.kill()
+        is_exit = 1
+        print "Exit"        
+        try:
+            proc.kill()
+        except:
+            pass
         sys.exit(1)
 main()

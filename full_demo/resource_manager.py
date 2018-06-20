@@ -3,6 +3,8 @@ import time
 import subprocess
 import sys
 
+is_exit = 0
+
 RPI_ID = -1
 
 def get_ID():
@@ -16,32 +18,33 @@ def get_ID():
 
 # callback function
 def on_connect_func(client, userdata, flags, rc):
-	pass
+    pass
 
 def on_disconnect_func(client, userdata, rc):
-	pass
+    pass
 
 def on_subscribe_func(client, userdata, message_id, granted_qos):
-	pass
+    pass
 
 def on_unsubscribe_func(client, userdata, message_id):
-	pass
+    pass
 
 def on_publish_func(client, userdata, message_id):
-	pass
+    pass
 
 def on_message_func(client, userdata, message):
-	print("message topic: ", message.topic)
-	print("message received: ", message.payload)
-	print("message qos: ", message.qos)
-	print("message retain flag: ", message.retain)
+    print("message topic: ", message.topic)
+    print("message received: ", message.payload)
+    print("message qos: ", message.qos)
+    print("message retain flag: ", message.retain)
 
 def on_log_func(client, userdata, level, string):
-	pass
+    pass
 # end callback function
 
 # main loop
 def main():
+    global is_exit
     try:
         global RPI_ID
         get_ID()
@@ -64,12 +67,15 @@ def main():
 	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
 
 	while True:
-		client.publish(topic = "resource_manager", payload = "reconfig_output", qos = 0, retain = False)
+	    client.publish(topic = "resource_manager", payload = "reconfig_output", qos = 0, retain = False)
 		
-		client.loop_start() # loop to enable callback functions	
-		client.loop_stop()
-		pass
+	    client.loop_start() # loop to enable callback functions	
+	    client.loop_stop()
+
+	    is_exit = 0
+	    pass
     except KeyboardInterrupt:
+        is_exit = 1
         print "Exit"
         sys.exit(1)
 main()
