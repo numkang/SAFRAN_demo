@@ -52,7 +52,7 @@ def on_message_func(client, userdata, message):
     print("message received: ", message.payload)
     # print("message qos: ", message.qos)
     # print("message retain flag: ", message.retain)
-    msg = int(message.payload[RPI_ID - 1])
+    msg = int(message.payload[RPI_ID])
     if(msg >= 0 and msg < len(app)):
         app_open = msg
     else:
@@ -104,22 +104,26 @@ def call_func(threadName):
     
     while True:
         if(is_alive == '0' and is_killed == False):
-            try:
-                proc.kill()
-                proc.wait()
-            except:
-                pass
+            proc.kill()
+            proc.wait()
+##            try:
+##                proc.kill()
+##                proc.wait()
+##            except:
+##                pass
             proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
             time.sleep(0.2)
             is_killed = True
         elif(is_alive == '1'):
             if(p_app_open != app_open):
                 p_app_open = app_open
-                try:
-                    proc.kill()
-                    proc.wait()
-                except:
-                    pass
+                proc.kill()
+                proc.wait()
+##              try:
+##                  proc.kill()
+##                  proc.wait()
+##              except:
+##                  pass
                 proc = subprocess.Popen(['python', app[app_open]]) #app to be run
                 time.sleep(0.2)
                 is_killed = False
@@ -136,8 +140,8 @@ def main():
 
         # Communication Setup
         broker_address = "192.168.0.2" # broker IP address
-        client_name = "rpi_node_" + str(RPI_ID)
-        client_topic = "rpi/" + str(RPI_ID)
+        client_name = "rpi_node_" + str(RPI_ID + 1)
+        client_topic = "rpi/" + str(RPI_ID + 1)
         client = mqtt.Client(client_name) # client's name
 
         # binding callback function
@@ -157,12 +161,9 @@ def main():
 
         # Get the initial app
         client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
-        time.sleep(0.5)
         client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
-        time.sleep(0.5)
         client.loop_start() # loop to enable callback functions 
         client.loop_stop()
-        time.sleep(0.5)
 
         thread_led = myThread(2, "LED_thread")
         thread_led.start()
@@ -181,6 +182,7 @@ def main():
         print "Exit"        
         try:
             proc.kill()
+            proc.wait()
         except:
             pass
         sys.exit(1)

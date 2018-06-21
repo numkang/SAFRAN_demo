@@ -23,8 +23,5 @@ print(int(b[1]))
 print(b[0] == b'0')
 print(b[2] == '3')
 
-
-output = "1234"
-output = output.replace(output[2],'5')
-print(output)
-print(output[2])
+x = ['0'] * 5
+print(x)

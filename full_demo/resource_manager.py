@@ -57,15 +57,16 @@ def on_log_func(client, userdata, level, string):
 def reconfiguration_func():
     global RPI_ID
     global node_status
+    global node_number
 
-    output = "0000000000000000"
+    output = ['0'] * node_number
 
     if(node_status[0] == b'1'):
-	output = output.replace(output[0],'1')
+        output[0] = '1'
     elif(node_status[0] == b'0' and node_status[1] == b'1'):
-	output = output.replace(output[1],'1')
+        output[1] = '1'
 
-    return output
+    return "".join(output)
 
 # main loop
 def main():
@@ -91,6 +92,7 @@ def main():
 
 	while True:
             reconfiguration_output = reconfiguration_func()
+            #print(reconfiguration_output)
             client.publish(topic = "resource_manager", payload = reconfiguration_output, qos = 0, retain = False)
 		
 	    client.loop_start() # loop to enable callback functions	
