@@ -56,6 +56,7 @@ def on_log_func(client, userdata, level, string):
 # Reconfiguration function
 def reconfiguration_func()
 	global RPI_ID
+	global node_status
 
 	output = "0000000000000000"
 
@@ -87,18 +88,17 @@ def main():
 		# client.on_log         = on_log_func
 
 		client.connect(broker_address) # connect to a broker
-
 		client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
 
-	while True:
-		reconfiguration_output = reconfiguration_func()
-	    client.publish(topic = "resource_manager", payload = reconfiguration_output, qos = 0, retain = False)
+		while True:
+			reconfiguration_output = reconfiguration_func()
+	    	client.publish(topic = "resource_manager", payload = reconfiguration_output, qos = 0, retain = False)
 		
-	    client.loop_start() # loop to enable callback functions	
-	    client.loop_stop()
+	    	client.loop_start() # loop to enable callback functions	
+	    	client.loop_stop()
 
-	    is_exit = 0
-	    pass
+	    	is_exit = 0
+	    	pass
     except KeyboardInterrupt:
         is_exit = 1
         print "Exit"

@@ -47,12 +47,14 @@ def on_publish_func(client, userdata, message_id):
 def on_message_func(client, userdata, message):
     global app
     global app_open
+    global RPI_ID
     # print("message topic: ", message.topic)
     # print("message received: ", message.payload)
     # print("message qos: ", message.qos)
     # print("message retain flag: ", message.retain)
-    if(int(message.payload) >= 0 and int(message.payload) < len(app)):
-        app_open = int(message.payload)
+    msg = int(message.payload[RPI_ID - 1])
+    if(msg >= 0 and msg < len(app)):
+        app_open = msg
     else
         print("Invalid app open")
 
@@ -147,13 +149,20 @@ def main():
         client.on_message     = on_message_func
         # client.on_log         = on_log_func
 
-        client.connect(broker_address) # connect to a broker
-
-        client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
+        client.connect(broker_address) # connect to a broker        
 
         # Threading Setup
         thread_switch = myThread(1, "switch_button_thread")
         thread_switch.start()
+
+        # Get the initial app
+        client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
+        time,sleep(0.5)
+        client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
+        time,sleep(0.5)
+        client.loop_start() # loop to enable callback functions 
+        client.loop_stop()
+        time,sleep(0.5)
 
         thread_led = myThread(2, "LED_thread")
         thread_led.start()
