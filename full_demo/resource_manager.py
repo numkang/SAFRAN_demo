@@ -66,7 +66,7 @@ def reconfiguration_func():
     elif(node_status[0] == b'0' and node_status[1] == b'1'):
         output[1] = '1'
 
-    return output#"".join(output)
+    return output #"".join(output)
 
 # main loop
 def main():
