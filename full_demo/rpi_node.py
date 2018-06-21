@@ -155,11 +155,17 @@ def main():
         #client.loop_start() # loop to enable callback functions 
         #client.loop_stop()
 
+        t0 = time.time()
+
         while True:
             # print(is_alive)
             read_switch("switch_button")
             call_func("LED")
-            client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
+
+            t1 = time.time()
+            if t1 - t0 > 0.5
+                client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
+                t0 = time.time()
 		
             client.loop_start() # loop to enable callback functions	
             client.loop_stop()

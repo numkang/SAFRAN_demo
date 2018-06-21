@@ -90,12 +90,18 @@ def main():
 	client.connect(broker_address) # connect to a broker
 	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
 
+	t0 = time.time()
+
         while True:
             reconfiguration_output = reconfiguration_func()
             arr = bytearray(reconfiguration_output)
             #print(arr)
-            client.publish(topic = "resource_manager", payload = arr, qos = 0, retain = False)
-		
+
+            t1 = time.time()
+            if t1 - t0 > 0.5
+                client.publish(topic = "resource_manager", payload = arr, qos = 0, retain = False)
+		t0 = time.time()
+
 	    client.loop_start() # loop to enable callback functions	
 	    client.loop_stop()
 
