@@ -55,7 +55,7 @@ def on_message_func(client, userdata, message):
     msg = int(message.payload[RPI_ID - 1])
     if(msg >= 0 and msg < len(app)):
         app_open = msg
-    else
+    else:
         print("Invalid app open")
 
 def on_log_func(client, userdata, level, string):
@@ -157,12 +157,12 @@ def main():
 
         # Get the initial app
         client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
-        time,sleep(0.5)
+        time.sleep(0.5)
         client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
-        time,sleep(0.5)
+        time.sleep(0.5)
         client.loop_start() # loop to enable callback functions 
         client.loop_stop()
-        time,sleep(0.5)
+        time.sleep(0.5)
 
         thread_led = myThread(2, "LED_thread")
         thread_led.start()
