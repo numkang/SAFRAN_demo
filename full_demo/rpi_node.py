@@ -6,20 +6,18 @@ import threading
 import time
 import sys
 
-app = np.array(['RED_LED.py', 'GREEN_LED.py', 'BLUE_LED.py', 'RGB_GPIO.py', 'OFF_LED.py'])
+RPI_ID = -1
+app = np.array(['GHOST_LED.py', 'RED_LED.py', 'GREEN_LED.py', 'BLUE_LED.py', 'RGB_GPIO.py', 'OFF_LED.py'])
+app_open = -1
 
 switch_button = 40
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(switch_button, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 input_state = GPIO.input(switch_button)
 
-kill_flag = False
-is_killed = True
 is_alive = '1'
 is_exit = 0
 proc = subprocess.Popen(['python', "empty.py"])
-
-RPI_ID = -1
 
 def get_ID():
     global RPI_ID
@@ -47,10 +45,16 @@ def on_publish_func(client, userdata, message_id):
     pass
 
 def on_message_func(client, userdata, message):
-    print("message topic: ", message.topic)
-    print("message received: ", message.payload)
-    print("message qos: ", message.qos)
-    print("message retain flag: ", message.retain)
+    global app
+    global app_open
+    # print("message topic: ", message.topic)
+    # print("message received: ", message.payload)
+    # print("message qos: ", message.qos)
+    # print("message retain flag: ", message.retain)
+    if(int(message.payload) >= 0 and int(message.payload) < len(app)):
+        app_open = int(message.payload)
+    else
+        print("Invalid app open")
 
 def on_log_func(client, userdata, level, string):
     pass
@@ -78,42 +82,26 @@ class myThread (threading.Thread):
 
 # Define a function for the thread
 def read_switch(threadName):
-    global input_state
-    global kill_flag
+    global input_state    
     global is_alive
     
     while True:        
         input_state = GPIO.input(switch_button)
         if input_state == False:
             is_alive = '1'
-            if kill_flag == True:
-                kill_flag = False
-            # print('Button not Pressed')
-            time.sleep(0.2)
         elif input_state == True:
             is_alive = '0'
-            if kill_flag == False:
-                kill_flag = True
-            # print('Button Pressed')
-            time.sleep(0.2)
 
 def call_func(threadName):
     global app
+    global app_open
     global proc
-    global kill_flag
-    global is_killed
+    global is_alive
+    is_killed = False
+    p_app_open = -1
     
     while True:
-        if(kill_flag == False and is_killed == True):
-            try:
-                proc.kill()
-                proc.wait()
-            except:
-                pass
-            proc = subprocess.Popen(['python', app[3]]) #app to be run
-            time.sleep(0.2)
-            is_killed = False
-        elif(kill_flag == True and is_killed == False):
+        if(is_alive == '0' and is_killed == False):
             try:
                 proc.kill()
                 proc.wait()
@@ -122,6 +110,17 @@ def call_func(threadName):
             proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
             time.sleep(0.2)
             is_killed = True
+        elif(is_alive == '1'):
+            if(p_app_open != app_open):
+                p_app_open = app_open
+                try:
+                    proc.kill()
+                    proc.wait()
+                except:
+                    pass
+                proc = subprocess.Popen(['python', app[app_open]]) #app to be run
+                time.sleep(0.2)
+                is_killed = False
 # End define a function for the thread
 
 # main loop
@@ -140,13 +139,13 @@ def main():
         client = mqtt.Client(client_name) # client's name
 
         # binding callback function
-        client.on_connect     = on_connect_func
-        client.on_disconnect  = on_disconnect_func
-        client.on_subscribe   = on_subscribe_func
-        client.on_unsubscribe = on_unsubscribe_func
-        client.on_publish     = on_publish_func
+        # client.on_connect     = on_connect_func
+        # client.on_disconnect  = on_disconnect_func
+        # client.on_subscribe   = on_subscribe_func
+        # client.on_unsubscribe = on_unsubscribe_func
+        # client.on_publish     = on_publish_func
         client.on_message     = on_message_func
-        client.on_log         = on_log_func
+        # client.on_log         = on_log_func
 
         client.connect(broker_address) # connect to a broker
 
@@ -160,7 +159,7 @@ def main():
         thread_led.start()
 
         while True:
-            print(is_alive)
+            # print(is_alive)
             client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
 		
             client.loop_start() # loop to enable callback functions	
