@@ -163,7 +163,7 @@ def main():
             call_func("LED")
 
             t1 = time.time()
-            if t1 - t0 > 0.5
+            if (t1 - t0 > 0.5):
                 client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
                 t0 = time.time()
 		
