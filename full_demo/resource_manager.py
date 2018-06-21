@@ -66,7 +66,7 @@ def reconfiguration_func():
     elif(node_status[0] == b'0' and node_status[1] == b'1'):
         output[1] = '1'
 
-    return "".join(output)
+    return output#"".join(output)
 
 # main loop
 def main():
@@ -90,10 +90,11 @@ def main():
 	client.connect(broker_address) # connect to a broker
 	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
 
-	while True:
+        while True:
             reconfiguration_output = reconfiguration_func()
-            #print(reconfiguration_output)
-            client.publish(topic = "resource_manager", payload = reconfiguration_output, qos = 0, retain = False)
+            arr = bytearray(reconfiguration_output)
+            #print(arr)
+            client.publish(topic = "resource_manager", payload = arr, qos = 0, retain = False)
 		
 	    client.loop_start() # loop to enable callback functions	
 	    client.loop_stop()

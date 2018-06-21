@@ -94,6 +94,13 @@ def read_switch(threadName):
         is_alive = '1'
     elif input_state == True:
         is_alive = '0'
+    
+##    while True:        
+##        input_state = GPIO.input(switch_button)
+##        if input_state == False:
+##            is_alive = '1'
+##        elif input_state == True:
+##            is_alive = '0'
 
 def call_func(threadName):
     global app
@@ -104,29 +111,56 @@ def call_func(threadName):
     p_app_open = -1
 
     if(is_alive == '0' and is_killed == False):
-        #proc.kill()
-        #proc.wait()
+        proc.kill()
+        proc.wait()
 ##            try:
 ##                proc.kill()
 ##                proc.wait()
 ##            except:
 ##                pass
         proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
-        #time.sleep(0.2)
+        time.sleep(0.2)
         is_killed = True
     elif(is_alive == '1'):
         if(p_app_open != app_open):
             p_app_open = app_open
-            #proc.kill()
-            #proc.wait()
+            proc.kill()
+            proc.wait()
 ##              try:
 ##                  proc.kill()
 ##                  proc.wait()
 ##              except:
 ##                  pass
             proc = subprocess.Popen(['python', app[app_open]]) #app to be run
-            #time.sleep(0.2)
+            time.sleep(0.2)
             is_killed = False
+    
+##    while True:
+##        if(is_alive == '0' and is_killed == False):
+##            proc.kill()
+##            proc.wait()
+####            try:
+####                proc.kill()
+####                proc.wait()
+####            except:
+####                pass
+##            proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
+##            time.sleep(0.2)
+##            is_killed = True
+##        elif(is_alive == '1'):
+##            if(p_app_open != app_open):
+##                p_app_open = app_open
+##                proc.kill()
+##                proc.wait()
+####              try:
+####                  proc.kill()
+####                  proc.wait()
+####              except:
+####                  pass
+##                proc = subprocess.Popen(['python', app[app_open]]) #app to be run
+##                time.sleep(0.2)
+##                is_killed = False
+# End define a function for the thread
 
 # main loop
 def main():
@@ -155,11 +189,18 @@ def main():
 
         client.connect(broker_address) # connect to a broker        
 
+        # Threading Setup
+        #thread_switch = myThread(1, "switch_button_thread")
+        #thread_switch.start()
+
         # Get the initial app
         client.subscribe(topic = "resource_manager", qos = 0) # subscribe to all nodes
         client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
         #client.loop_start() # loop to enable callback functions 
         #client.loop_stop()
+
+        #thread_led = myThread(2, "LED_thread")
+        #thread_led.start()
 
         while True:
             # print(is_alive)

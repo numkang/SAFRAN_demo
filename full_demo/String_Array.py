@@ -25,3 +25,9 @@ print(b[2] == '3')
 
 x = ['0'] * 5
 print(x)
+
+string = "Python is interesting."
+
+# string with encoding 'utf-8'
+arr = bytearray(string, 'utf-8')
+print(arr)
