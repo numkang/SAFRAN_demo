@@ -64,28 +64,8 @@ def on_log_func(client, userdata, level, string):
     pass
 # End defining callback function
 
-# Define a class for the thread
-class myThread (threading.Thread):
-    def __init__(self, threadID, name):
-        threading.Thread.__init__(self)
-        self._stop_event = threading.Event()
-        self.threadID = threadID
-        self.name = name
-
-    def stop(self):
-        self._stop_event.set()
-        
-    def run(self):
-        print ("Starting " + self.name)
-        if(self.threadID == 1):
-            read_switch(self.name)
-        elif(self.threadID == 2):
-            call_func(self.name)
-        print ("Exiting " + self.name)
-# End defining a class for the thread
-
 # Define a function for the thread
-def read_switch(threadName):
+def read_switch():
     global input_state    
     global is_alive
 
@@ -95,7 +75,7 @@ def read_switch(threadName):
     elif input_state == True:
         is_alive = '0'
 
-def call_func(threadName):
+def call_func():
     global app
     global app_open
     global proc
@@ -159,8 +139,8 @@ def main():
 
         while True:
             # print(is_alive)
-            read_switch("switch_button")
-            call_func("LED")
+            read_switch()
+            call_func()
 
             t1 = time.time()
             if (t1 - t0 > 0.1):
