@@ -98,7 +98,7 @@ def main():
             #print(arr)
 
             t1 = time.time()
-            if (t1 - t0 > 0.1):
+            if (t1 - t0 > 1):
                 client.publish(topic = "resource_manager", payload = arr, qos = 0, retain = False)
 		t0 = time.time()
 
