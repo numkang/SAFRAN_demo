@@ -82,6 +82,7 @@ def reconfiguration_func():
 
     fp_r = open("algo_output.txt", "r")
     algo_output = fp_r.read()
+    fp_r.close()
 
     #print(algo_output)      
 
@@ -90,6 +91,7 @@ def reconfiguration_func():
 # main loop
 def main():
     global is_exit
+    global fp_w
     try:
         global RPI_ID
         get_ID()
@@ -131,5 +133,7 @@ def main():
     except KeyboardInterrupt:
         is_exit = 1
         print "Exit"
+        fp_w.close()
+        fp_r.close()
         sys.exit(1)
 main()
