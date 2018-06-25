@@ -42,7 +42,31 @@ while True:
 	# Wait 1 seconds
 	time.sleep(1)
 
-	# GHOST node
+	# YELLOW node
+	GPIO.output(RED_LED,   GPIO.HIGH)
+	GPIO.output(GREEN_LED, GPIO.HIGH)
+	GPIO.output(BLUE_LED,  GPIO.LOW)
+
+	# Wait 1 seconds
+	time.sleep(1)
+
+	# CYAN node
+	GPIO.output(RED_LED,   GPIO.LOW)
+	GPIO.output(GREEN_LED, GPIO.HIGH)
+	GPIO.output(BLUE_LED,  GPIO.HIGH)
+
+	# Wait 1 seconds
+	time.sleep(1)
+
+	# MAGENTA node
+	GPIO.output(RED_LED,   GPIO.HIGH)
+	GPIO.output(GREEN_LED, GPIO.LOW)
+	GPIO.output(BLUE_LED,  GPIO.HIGH)
+
+	# Wait 1 seconds
+	time.sleep(1)
+
+	# GHOST node (White)
 	GPIO.output(RED_LED,   GPIO.HIGH)
 	GPIO.output(GREEN_LED, GPIO.HIGH)
 	GPIO.output(BLUE_LED,  GPIO.HIGH)
