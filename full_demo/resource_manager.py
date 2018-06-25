@@ -63,7 +63,7 @@ def reconfiguration_func():
     global fp_w
 
     # Write "".join(node_status) as an input for Louis
-    fp_w.write(0, 0)
+    fp_w.seek(0, 0)
     fp_w.write("".join(node_status))
     print(node_status)
 
