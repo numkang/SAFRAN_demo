@@ -58,7 +58,7 @@ def on_log_func(client, userdata, level, string):
 # Reconfiguration function
 def reconfiguration_func():
     global RPI_ID
-    global node_status #input to Luis's C++
+    global node_status # input to Luis's C++
     global node_number
     global fp_w
 
@@ -84,7 +84,7 @@ def reconfiguration_func():
     algo_output = fp_r.read()
     fp_r.close()
 
-    #print(algo_output)      
+    # print(algo_output)      
 
     return algo_output
 
@@ -114,9 +114,9 @@ def main():
 	t0 = time.time()
 
         while True:
-            #reconfiguration_output = reconfiguration_func()
-            #arr = bytearray(reconfiguration_output)
-            #print(arr)
+            # reconfiguration_output = reconfiguration_func()
+            # arr = bytearray(reconfiguration_output)
+            # print(arr)
 
             arr = reconfiguration_func()
 
