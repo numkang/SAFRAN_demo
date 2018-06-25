@@ -56,17 +56,33 @@ def on_log_func(client, userdata, level, string):
 # Reconfiguration function
 def reconfiguration_func():
     global RPI_ID
-    global node_status
+    global node_status #input to Luis's C++
     global node_number
 
-    output = ['0'] * node_number
+    # Write "".join(node_status) as an input for Louis
+    fp_w = open("text2.txt", "w")
+    fp_w.write("".join(node_status))
+    print(node_status)
+
+    # Read Louis's output and put it in an chararray form to send to nodes
+
+    '''output = ['0'] * node_number
 
     if(node_status[0] == b'1'):
         output[0] = '1'
     elif(node_status[0] == b'0' and node_status[1] == b'1'):
         output[1] = '1'
 
-    return output #"".join(output)
+    print(output)
+
+    return output #"".join(output)'''
+
+    fp_r = open("text1.txt", "r")
+    algo_output = fp_r.read()
+
+    #print(algo_output)      
+
+    return algo_output
 
 # main loop
 def main():
@@ -93,9 +109,11 @@ def main():
 	t0 = time.time()
 
         while True:
-            reconfiguration_output = reconfiguration_func()
-            arr = bytearray(reconfiguration_output)
+            #reconfiguration_output = reconfiguration_func()
+            #arr = bytearray(reconfiguration_output)
             #print(arr)
+
+            arr = reconfiguration_func()
 
             t1 = time.time()
             if (t1 - t0 > 1):
