@@ -11,6 +11,8 @@ node_status[:] = '0'
 
 RPI_ID = -1
 
+fp_w = open("algo_input.txt", "w")
+
 def get_ID():
     global RPI_ID
     ips = subprocess.check_output(['hostname', '--all-ip-addresses'])
@@ -39,8 +41,8 @@ def on_publish_func(client, userdata, message_id):
 def on_message_func(client, userdata, message):
     global node_status
     global node_number
-    print("message topic: ", message.topic)
-    print("message received: ", message.payload)
+    # print("message topic: ", message.topic)
+    # print("message received: ", message.payload)
     # print("message qos: ", message.qos)
     # print("message retain flag: ", message.retain)
     node_id = int(message.topic[4:])
@@ -58,9 +60,10 @@ def reconfiguration_func():
     global RPI_ID
     global node_status #input to Luis's C++
     global node_number
+    global fp_w
 
     # Write "".join(node_status) as an input for Louis
-    fp_w = open("text2.txt", "w")
+    fp_w.write(0, 0)
     fp_w.write("".join(node_status))
     print(node_status)
 
@@ -77,7 +80,7 @@ def reconfiguration_func():
 
     return output #"".join(output)'''
 
-    fp_r = open("text1.txt", "r")
+    fp_r = open("algo_output.txt", "r")
     algo_output = fp_r.read()
 
     #print(algo_output)      
