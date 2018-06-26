@@ -7,7 +7,7 @@ import time
 import sys
 
 RPI_ID = -1
-app = np.array(['GHOST_LED.py', 'RED_LED.py', 'GREEN_LED.py', 'BLUE_LED.py', 'RGB_GPIO.py', 'OFF_LED.py'])
+app = np.array(['GHOST_LED.py', 'BLUE_LED.py', 'GREEN_LED.py', 'YELLOW_LED.py', 'RED_LED', 'CYAN_LED', 'MAGENTA_LED', 'RGB_GPIO.py', 'OFF_LED.py'])
 p_app_open = -1
 app_open = -1
 

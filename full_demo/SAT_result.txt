@@ -1,0 +1,283 @@
+c Parsing PB file...
+c Converting 479 PB-constraints to clauses...
+c   -- Unit propagations: (none)
+c   -- Detecting intervals from adjacent constraints: ######################################################################################################################################################################################################################
+c   -- Clauses(.)/Splits(s): s............
+c ---[ 467]---> BDD-cost:   21
+c ---[ 466]---> BDD-cost:   21
+c ---[ 465]---> BDD-cost:   21
+c ---[ 464]---> BDD-cost:   21
+c ---[ 463]---> BDD-cost:   21
+c ---[ 462]---> BDD-cost:   21
+c ---[ 461]---> BDD-cost:   21
+c ---[ 460]---> BDD-cost:   21
+c ---[ 459]---> BDD-cost:   21
+c ---[ 458]---> BDD-cost:   21
+c ---[ 457]---> BDD-cost:   21
+c ---[ 456]---> BDD-cost:   21
+c ---[ 455]---> BDD-cost:   21
+c ---[ 454]---> BDD-cost:   21
+c ---[ 452]---> BDD-cost:   25
+c ---[ 450]---> BDD-cost:   25
+c ---[ 448]---> BDD-cost:   27
+c ---[ 446]---> BDD-cost:   25
+c ---[ 444]---> BDD-cost:   25
+c ---[ 442]---> BDD-cost:   25
+c ---[ 440]---> BDD-cost:   27
+c ---[ 438]---> BDD-cost:   29
+c ---[ 436]---> BDD-cost:   27
+c ---[ 434]---> BDD-cost:   27
+c ---[ 432]---> BDD-cost:   27
+c ---[ 430]---> BDD-cost:   27
+c ---[ 428]---> BDD-cost:    5
+c ---[ 425]---> BDD-cost:   21
+c ---[ 424]---> BDD-cost:   21
+c ---[ 423]---> BDD-cost:   21
+c ---[ 422]---> BDD-cost:   21
+c ---[ 421]---> BDD-cost:   21
+c ---[ 420]---> BDD-cost:   21
+c ---[ 419]---> BDD-cost:   21
+c ---[ 418]---> BDD-cost:   21
+c ---[ 417]---> BDD-cost:   21
+c ---[ 416]---> BDD-cost:   21
+c ---[ 415]---> BDD-cost:   21
+c ---[ 414]---> BDD-cost:   21
+c ---[ 413]---> BDD-cost:   21
+c ---[ 412]---> BDD-cost:   21
+c ---[ 411]---> BDD-cost:   21
+c ---[ 410]---> BDD-cost:   21
+c ---[ 409]---> BDD-cost:   21
+c ---[ 408]---> BDD-cost:   21
+c ---[ 407]---> BDD-cost:   21
+c ---[ 406]---> BDD-cost:   21
+c ---[ 404]---> BDD-cost:   37
+c ---[ 402]---> BDD-cost:   37
+c ---[ 400]---> BDD-cost:   39
+c ---[ 398]---> BDD-cost:   37
+c ---[ 396]---> BDD-cost:   39
+c ---[ 394]---> BDD-cost:   37
+c ---[ 392]---> BDD-cost:   37
+c ---[ 390]---> BDD-cost:   41
+c ---[ 388]---> BDD-cost:   39
+c ---[ 386]---> BDD-cost:   41
+c ---[ 384]---> BDD-cost:   39
+c ---[ 382]---> BDD-cost:   39
+c ---[ 380]---> BDD-cost:    1
+c ---[ 378]---> BDD-cost:    1
+c ---[ 376]---> BDD-cost:    1
+c ---[ 374]---> BDD-cost:    1
+c ---[ 372]---> BDD-cost:    6
+c ---[ 370]---> BDD-cost:    6
+c ---[ 368]---> BDD-cost:    6
+c ---[ 366]---> BDD-cost:    6
+c ---[ 364]---> BDD-cost:    6
+c ---[ 362]---> BDD-cost:    6
+c ---[ 360]---> BDD-cost:    6
+c ---[ 358]---> BDD-cost:    6
+c ---[ 356]---> BDD-cost:    6
+c ---[ 354]---> BDD-cost:    6
+c ---[ 352]---> BDD-cost:    6
+c ---[ 350]---> BDD-cost:    6
+c ---[ 348]---> BDD-cost:    6
+c ---[ 346]---> BDD-cost:    6
+c ---[ 344]---> BDD-cost:    6
+c ---[ 342]---> BDD-cost:    6
+c ---[ 340]---> BDD-cost:    6
+c ---[ 338]---> BDD-cost:    6
+c ---[ 336]---> BDD-cost:    6
+c ---[ 334]---> BDD-cost:    6
+c ---[ 332]---> BDD-cost:    6
+c ---[ 330]---> BDD-cost:    6
+c ---[ 328]---> BDD-cost:    6
+c ---[ 326]---> BDD-cost:    6
+c ---[ 324]---> BDD-cost:    4
+c ---[ 322]---> BDD-cost:    6
+c ---[ 320]---> BDD-cost:    9
+c ---[ 318]---> BDD-cost:    6
+c ---[ 316]---> BDD-cost:    9
+c ---[ 314]---> BDD-cost:    6
+c ---[ 312]---> BDD-cost:    6
+c ---[ 310]---> BDD-cost:    9
+c ---[ 308]---> BDD-cost:    6
+c ---[ 306]---> BDD-cost:    9
+c ---[ 304]---> BDD-cost:    6
+c ---[ 302]---> BDD-cost:    6
+c ---[ 300]---> BDD-cost:    7
+c ---[ 298]---> BDD-cost:    9
+c ---[ 296]---> BDD-cost:    9
+c ---[ 294]---> BDD-cost:    9
+c ---[ 292]---> BDD-cost:    9
+c ---[ 290]---> BDD-cost:    9
+c ---[ 288]---> BDD-cost:    9
+c ---[ 286]---> BDD-cost:    9
+c ---[ 284]---> BDD-cost:    9
+c ---[ 282]---> BDD-cost:    9
+c ---[ 280]---> BDD-cost:    9
+c ---[ 278]---> BDD-cost:    9
+c ---[ 276]---> BDD-cost:   12
+c ---[ 274]---> BDD-cost:   12
+c ---[ 272]---> BDD-cost:   12
+c ---[ 270]---> BDD-cost:   12
+c ---[ 268]---> BDD-cost:   12
+c ---[ 266]---> BDD-cost:   12
+c ---[ 264]---> BDD-cost:   12
+c ---[ 262]---> BDD-cost:   12
+c ---[ 260]---> BDD-cost:   12
+c ---[ 258]---> BDD-cost:   12
+c ---[ 256]---> BDD-cost:   12
+c ---[ 254]---> BDD-cost:   12
+c ---[ 252]---> BDD-cost:    9
+c ---[ 250]---> BDD-cost:    9
+c ---[ 248]---> BDD-cost:    9
+c ---[ 246]---> BDD-cost:    9
+c ---[ 244]---> BDD-cost:    9
+c ---[ 242]---> BDD-cost:    9
+c ---[ 240]---> BDD-cost:    9
+c ---[ 238]---> BDD-cost:    9
+c ---[ 236]---> BDD-cost:    9
+c ---[ 234]---> BDD-cost:    9
+c ---[ 232]---> BDD-cost:    9
+c ---[ 230]---> BDD-cost:    9
+c ---[ 228]---> BDD-cost:    7
+c ---[ 226]---> BDD-cost:    9
+c ---[ 224]---> BDD-cost:    9
+c ---[ 222]---> BDD-cost:    9
+c ---[ 220]---> BDD-cost:    9
+c ---[ 218]---> BDD-cost:    9
+c ---[ 216]---> BDD-cost:    9
+c ---[ 214]---> BDD-cost:    9
+c ---[ 212]---> BDD-cost:    9
+c ---[ 210]---> BDD-cost:    9
+c ---[ 208]---> BDD-cost:    9
+c ---[ 206]---> BDD-cost:    9
+c ---[ 204]---> BDD-cost:   10
+c ---[ 202]---> BDD-cost:   12
+c ---[ 200]---> BDD-cost:   12
+c ---[ 198]---> BDD-cost:   12
+c ---[ 196]---> BDD-cost:   12
+c ---[ 194]---> BDD-cost:   12
+c ---[ 192]---> BDD-cost:   12
+c ---[ 190]---> BDD-cost:   12
+c ---[ 188]---> BDD-cost:   12
+c ---[ 186]---> BDD-cost:   12
+c ---[ 184]---> BDD-cost:   12
+c ---[ 182]---> BDD-cost:   12
+c ---[ 180]---> BDD-cost:   10
+c ---[ 178]---> BDD-cost:   12
+c ---[ 176]---> BDD-cost:   12
+c ---[ 174]---> BDD-cost:   12
+c ---[ 172]---> BDD-cost:   12
+c ---[ 170]---> BDD-cost:   12
+c ---[ 168]---> BDD-cost:   12
+c ---[ 166]---> BDD-cost:   12
+c ---[ 164]---> BDD-cost:   12
+c ---[ 162]---> BDD-cost:   12
+c ---[ 160]---> BDD-cost:   12
+c ---[ 158]---> BDD-cost:   12
+c ---[ 156]---> BDD-cost:    9
+c ---[ 154]---> BDD-cost:    9
+c ---[ 152]---> BDD-cost:    9
+c ---[ 150]---> BDD-cost:    9
+c ---[ 148]---> BDD-cost:    9
+c ---[ 146]---> BDD-cost:    9
+c ---[ 144]---> BDD-cost:    9
+c ---[ 142]---> BDD-cost:    9
+c ---[ 140]---> BDD-cost:    9
+c ---[ 138]---> BDD-cost:    9
+c ---[ 136]---> BDD-cost:    9
+c ---[ 134]---> BDD-cost:    9
+c ---[ 132]---> BDD-cost:    4
+c ---[ 130]---> BDD-cost:    6
+c ---[ 128]---> BDD-cost:    6
+c ---[ 126]---> BDD-cost:    6
+c ---[ 124]---> BDD-cost:    6
+c ---[ 122]---> BDD-cost:    6
+c ---[ 120]---> BDD-cost:    6
+c ---[ 118]---> BDD-cost:    6
+c ---[ 116]---> BDD-cost:    6
+c ---[ 114]---> BDD-cost:    6
+c ---[ 112]---> BDD-cost:    6
+c ---[ 110]---> BDD-cost:    6
+c ---[ 108]---> BDD-cost:    9
+c ---[ 106]---> BDD-cost:    7
+c ---[ 104]---> BDD-cost:    9
+c ---[ 102]---> BDD-cost:    9
+c ---[ 100]---> BDD-cost:    9
+c ---[  98]---> BDD-cost:    9
+c ---[  96]---> BDD-cost:    9
+c ---[  94]---> BDD-cost:    9
+c ---[  92]---> BDD-cost:    9
+c ---[  90]---> BDD-cost:    9
+c ---[  88]---> BDD-cost:    9
+c ---[  86]---> BDD-cost:    9
+c ---[  84]---> BDD-cost:    9
+c ---[  82]---> BDD-cost:    9
+c ---[  80]---> BDD-cost:    9
+c ---[  78]---> BDD-cost:    9
+c ---[  76]---> BDD-cost:    9
+c ---[  74]---> BDD-cost:    9
+c ---[  72]---> BDD-cost:    9
+c ---[  70]---> BDD-cost:    9
+c ---[  68]---> BDD-cost:    9
+c ---[  66]---> BDD-cost:    9
+c ---[  64]---> BDD-cost:    9
+c ---[  62]---> BDD-cost:    9
+c ---[  60]---> BDD-cost:    6
+c ---[  58]---> BDD-cost:    6
+c ---[  56]---> BDD-cost:    6
+c ---[  54]---> BDD-cost:    6
+c ---[  52]---> BDD-cost:    6
+c ---[  50]---> BDD-cost:    6
+c ---[  48]---> BDD-cost:    6
+c ---[  46]---> BDD-cost:    6
+c ---[  44]---> BDD-cost:    6
+c ---[  42]---> BDD-cost:    6
+c ---[  40]---> BDD-cost:    6
+c ---[  38]---> BDD-cost:    6
+c ---[  36]---> Sorter-cost: 1111     Base: 2 2 2
+c ---[  34]---> Sorter-cost: 1112     Base: 2 2 2
+c ---[  32]---> Sorter-cost: 1139     Base: 2 2 2
+c ---[  30]---> Sorter-cost: 1112     Base: 2 2 2
+c ---[  28]---> Sorter-cost: 1139     Base: 2 2 2
+c ---[  26]---> Sorter-cost: 1111     Base: 2 2 2
+c ---[  24]---> Sorter-cost: 1111     Base: 2 2 2
+c ---[  22]---> Sorter-cost: 1168     Base: 2 2 2
+c ---[  20]---> Sorter-cost: 1175     Base: 2 2 2
+c ---[  18]---> Sorter-cost: 1200     Base: 2 2 2
+c ---[  16]---> Sorter-cost: 1139     Base: 2 2 2
+c ---[  14]---> Sorter-cost: 1175     Base: 2 2 2
+c ---[  11]---> BDD-cost:    1
+c ---[   9]---> BDD-cost:    1
+c ---[   7]---> BDD-cost:    1
+c ---[   5]---> BDD-cost:    1
+c ---[   3]---> BDD-cost:    1
+c ---[   1]---> BDD-cost:    1
+c ---[   0]---> BDD-cost:    3
+|  Eliminated clauses:           0.20 Mb                                      |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+c [1mFound solution: -15[0m
+c ---[   0]---> BDD-cost:    2
+|  Eliminated clauses:           0.20 Mb                                      |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+c [1mFound solution: -18[0m
+c [1mOptimal solution: -18[0m
+s OPTIMUM FOUND
+v A_1_1 A_1_2 A_1_3 A_1_4 A_1_5 A_1_6 -M_1_1 -M_1_2 -M_1_3 CRT_10_1 CRT_11_2 CRT_12_3 CRT_14_4 CRT_15_5 CRT_16_6 CRT_3_7 -DN_1_1 CRT_4_8 CRT_7_9 CRT_8_10 -CRT_2_1 -CRT_2_2 -CRT_2_3 -CRT_2_4 -CRT_2_5 -CRT_2_6 -CRT_2_7 -CRT_2_8 -CRT_2_9 -CRT_2_10 -CRT_2_11 -CRT_2_12 -CRT_1_1 -CRT_1_2 -CRT_1_4 -CRT_1_5 -CRT_1_6 -CRT_1_7 -CRT_1_9 -CRT_1_10 -CRT_1_11 -CRT_1_12 -CRT_1_3 -CRT_1_8 -CRT_3_1 -CRT_3_2 -CRT_3_3 -CRT_3_4 -CRT_3_5 -CRT_3_6 -CRT_3_8 -CRT_3_9 -CRT_3_10 -CRT_3_11 -CRT_3_12 -CRT_4_1 -CRT_4_2 -CRT_4_3 -CRT_4_4 -CRT_4_5 -CRT_4_6 -CRT_4_7 -CRT_4_9 -CRT_4_10 -CRT_4_11 -CRT_4_12 -CRT_5_1 -CRT_5_2 -CRT_5_3 -CRT_5_4 -CRT_5_5 -CRT_5_6 -CRT_5_7 -CRT_5_8 -CRT_5_9 -CRT_5_10 -CRT_5_11 -CRT_5_12 -CRT_6_1 -CRT_6_2 -CRT_6_3 -CRT_6_4 -CRT_6_5 -CRT_6_6 -CRT_6_7 -CRT_6_8 -CRT_6_9 -CRT_6_10 -CRT_6_11 -CRT_6_12 -CRT_7_1 -CRT_7_2 -CRT_7_3 -CRT_7_4 -CRT_7_5 -CRT_7_6 -CRT_7_7 -CRT_7_8 -CRT_7_10 -CRT_7_11 -CRT_7_12 -CRT_8_1 -CRT_8_2 -CRT_8_3 -CRT_8_4 -CRT_8_5 -CRT_8_6 -CRT_8_7 -CRT_8_8 -CRT_8_9 -CRT_8_11 -CRT_8_12 -CRT_9_1 -CRT_9_2 -CRT_9_3 -CRT_9_4 -CRT_9_5 -CRT_9_6 -CRT_9_7 -CRT_9_8 -CRT_9_9 -CRT_9_10 CRT_9_11 -CRT_9_12 -CRT_10_2 -CRT_10_3 -CRT_10_4 -CRT_10_5 -CRT_10_6 -CRT_10_7 -CRT_10_8 -CRT_10_9 -CRT_10_10 -CRT_10_11 -CRT_10_12 -CRT_11_1 -CRT_11_3 -CRT_11_4 -CRT_11_5 -CRT_11_6 -CRT_11_7 -CRT_11_8 -CRT_11_9 -CRT_11_10 -CRT_11_11 -CRT_11_12 -CRT_12_1 -CRT_12_2 -CRT_12_4 -CRT_12_5 -CRT_12_6 -CRT_12_7 -CRT_12_8 -CRT_12_9 -CRT_12_10 -CRT_12_11 -CRT_12_12 -CRT_13_1 -CRT_13_2 -CRT_13_3 -CRT_13_4 -CRT_13_5 -CRT_13_6 -CRT_13_7 -CRT_13_8 -CRT_13_9 -CRT_13_10 -CRT_13_11 CRT_13_12 -CRT_14_1 -CRT_14_2 -CRT_14_3 -CRT_14_5 -CRT_14_6 -CRT_14_7 -CRT_14_8 -CRT_14_9 -CRT_14_10 -CRT_14_11 -CRT_14_12 -CRT_15_1 -CRT_15_2 -CRT_15_3 -CRT_15_4 -CRT_15_6 -CRT_15_7 -CRT_15_8 -CRT_15_9 -CRT_15_10 -CRT_15_11 -CRT_15_12 -CRT_16_1 -CRT_16_2 -CRT_16_3 -CRT_16_4 -CRT_16_5 -CRT_16_7 -CRT_16_8 -CRT_16_9 -CRT_16_10 -CRT_16_11 -CRT_16_12 -DN_1_2 -CD_1_1 -CD_1_2 -CD_1_3 -CD_1_4 -CD_1_5 -CD_1_6 -CD_1_7 -CD_1_8 -CD_1_9 -CD_1_10 -CD_1_11 -CD_1_12 -CD_2_1 -CD_2_2 -CD_2_3 -CD_2_4 -CD_2_5 -CD_2_6 -CD_2_7 -CD_2_8 -CD_2_9 -CD_2_10 -CD_2_11 -CD_2_12 -CD_3_1 -CD_3_2 -CD_3_3 -CD_3_4 -CD_3_5 -CD_3_6 -CD_3_7 -CD_3_8 -CD_3_9 -CD_3_10 -CD_3_11 -CD_3_12 -CD_4_1 -CD_4_2 -CD_4_3 -CD_4_4 -CD_4_5 -CD_4_6 -CD_4_7 -CD_4_8 -CD_4_9 -CD_4_10 -CD_4_11 -CD_4_12 -CD_5_1 -CD_5_2 -CD_5_3 -CD_5_4 -CD_5_5 -CD_5_6 -CD_5_7 CD_5_8 -CD_5_9 -CD_5_10 -CD_5_11 -CD_5_12 -CD_6_1 -CD_6_2 -CD_6_3 -CD_6_4 -CD_6_5 -CD_6_6 -CD_6_7 -CD_6_8 CD_6_9 -CD_6_10 -CD_6_11 -CD_6_12 -CD_7_1 -CD_7_2 -CD_7_3 -CD_7_4 -CD_7_5 -CD_7_6 -CD_7_7 -CD_7_8 -CD_7_9 CD_7_10 -CD_7_11 -CD_7_12 -CD_8_1 -CD_8_2 -CD_8_3 -CD_8_4 -CD_8_5 -CD_8_6 -CD_8_7 -CD_8_8 -CD_8_9 -CD_8_10 -CD_8_11 -CD_8_12 -CD_9_1 -CD_9_2 -CD_9_3 -CD_9_4 -CD_9_5 -CD_9_6 -CD_9_7 -CD_9_8 -CD_9_9 -CD_9_10 -CD_9_11 -CD_9_12 -CD_10_1 -CD_10_2 -CD_10_3 -CD_10_4 -CD_10_5 -CD_10_6 -CD_10_7 -CD_10_8 -CD_10_9 -CD_10_10 -CD_10_11 -CD_10_12 -CD_11_1 -CD_11_2 -CD_11_3 -CD_11_4 -CD_11_5 -CD_11_6 -CD_11_7 -CD_11_8 -CD_11_9 -CD_11_10 -CD_11_11 -CD_11_12 -CD_12_1 -CD_12_2 -CD_12_3 -CD_12_4 -CD_12_5 -CD_12_6 -CD_12_7 -CD_12_8 -CD_12_9 -CD_12_10 CD_12_11 -CD_12_12 -CD_13_1 -CD_13_2 -CD_13_3 -CD_13_4 -CD_13_5 -CD_13_6 -CD_13_7 -CD_13_8 -CD_13_9 -CD_13_10 -CD_13_11 -CD_13_12 -CD_14_1 -CD_14_2 -CD_14_3 -CD_14_4 -CD_14_5 -CD_14_6 -CD_14_7 -CD_14_8 -CD_14_9 -CD_14_10 -CD_14_11 -CD_14_12 -CD_15_1 -CD_15_2 -CD_15_3 -CD_15_4 -CD_15_5 -CD_15_6 -CD_15_7 -CD_15_8 -CD_15_9 -CD_15_10 -CD_15_11 -CD_15_12 -CD_16_1 -CD_16_2 -CD_16_3 -CD_16_4 -CD_16_5 -CD_16_6 -CD_16_7 -CD_16_8 -CD_16_9 -CD_16_10 -CD_16_11 CD_16_12 CD_17_1 -CD_17_2 -CD_17_3 -CD_17_4 -CD_17_5 -CD_17_6 -CD_17_7 -CD_17_8 -CD_17_9 -CD_17_10 -CD_17_11 -CD_17_12 -CD_18_1 CD_18_2 -CD_18_3 -CD_18_4 -CD_18_5 -CD_18_6 -CD_18_7 -CD_18_8 -CD_18_9 -CD_18_10 -CD_18_11 -CD_18_12 -CD_19_1 -CD_19_2 CD_19_3 -CD_19_4 -CD_19_5 -CD_19_6 -CD_19_7 -CD_19_8 -CD_19_9 -CD_19_10 -CD_19_11 -CD_19_12 -CD_20_1 -CD_20_2 -CD_20_3 CD_20_4 -CD_20_5 -CD_20_6 -CD_20_7 -CD_20_8 -CD_20_9 -CD_20_10 -CD_20_11 -CD_20_12 -CD_21_1 -CD_21_2 -CD_21_3 -CD_21_4 CD_21_5 -CD_21_6 -CD_21_7 -CD_21_8 -CD_21_9 -CD_21_10 -CD_21_11 -CD_21_12 -CD_22_1 -CD_22_2 -CD_22_3 -CD_22_4 -CD_22_5 -CD_22_6 -CD_22_7 -CD_22_8 -CD_22_9 -CD_22_10 -CD_22_11 -CD_22_12 -CD_23_1 -CD_23_2 -CD_23_3 -CD_23_4 -CD_23_5 CD_23_6 -CD_23_7 -CD_23_8 -CD_23_9 -CD_23_10 -CD_23_11 -CD_23_12 -CD_24_1 -CD_24_2 -CD_24_3 -CD_24_4 -CD_24_5 -CD_24_6 CD_24_7 -CD_24_8 -CD_24_9 -CD_24_10 -CD_24_11 -CD_24_12 -DN_1_3 -DN_1_4 -DN_1_5 -DN_1_6
+c _______________________________________________________________________________
+c 
+restarts              : 2
+conflicts             : 80             (86 /sec)
+decisions             : 458            (0.00 % random) (490 /sec)
+propagations          : 115590         (123584 /sec)
+conflict literals     : 1227           (40.75 % deleted)
+Memory used           : 15.97 MB
+CPU time              : 0.935312 s
+c _______________________________________________________________________________

@@ -7,7 +7,7 @@ import sys
 is_exit = 0
 node_number = 4*4
 node_status = np.empty(node_number, dtype = "S1")
-node_status[:] = '0'
+node_status[:] = '2'
 
 RPI_ID = -1
 
