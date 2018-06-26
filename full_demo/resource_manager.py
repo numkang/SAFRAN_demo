@@ -11,7 +11,7 @@ node_status[:] = '0'
 
 RPI_ID = -1
 
-fp_w = open("algo_input.txt", "w")
+fp_w = open("faults.txt", "w")
 
 def get_ID():
     global RPI_ID
@@ -80,7 +80,7 @@ def reconfiguration_func():
 
     return output #"".join(output)'''
 
-    fp_r = open("algo_output.txt", "r")
+    fp_r = open("allocation_mapping.txt", "r")
     algo_output = fp_r.read()
     fp_r.close()
 

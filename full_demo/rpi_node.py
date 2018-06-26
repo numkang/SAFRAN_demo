@@ -7,16 +7,21 @@ import time
 import sys
 
 RPI_ID = -1
-app = np.array(['GHOST_LED.py', 'BLUE_LED.py', 'GREEN_LED.py', 'RED_LED.py', 'CYAN_LED.py', 'YELLOW_LED.py', 'MAGENTA_LED.py', 'RGB_GPIO.py', 'OFF_LED.py'])
+app = np.array(['GHOST_LED.py', 'RED_LED.py', 'GREEN_LED.py', 'BLUE_LED.py', 'RGB_GPIO.py', 'OFF_LED.py'])
 p_app_open = -1
 app_open = -1
 
-switch_button = 40
+switch_button_1 = 40
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(switch_button, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-input_state = GPIO.input(switch_button)
+GPIO.setup(switch_button_1, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+input_state_1 = GPIO.input(switch_button_1)
 
-is_alive = '1'
+switch_button_2 = 37
+#GPIO.setmode(GPIO.BOARD)
+GPIO.setup(switch_button_2, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+input_state_2 = GPIO.input(switch_button_2)
+
+is_alive = '2'
 is_killed = False
 is_exit = 0
 proc = subprocess.Popen(['python', "empty.py"])
@@ -66,32 +71,39 @@ def on_log_func(client, userdata, level, string):
 
 # Define a function for the thread
 def read_switch():
-    global input_state    
+    global input_state_1
+    global input_state_2
     global is_alive
 
-    input_state = GPIO.input(switch_button)
-    if input_state == False:
-        is_alive = '1'
-    elif input_state == True:
-        is_alive = '0'
+    input_state_1 = GPIO.input(switch_button_1)
+    input_state_2 = GPIO.input(switch_button_2)
+    if input_state_1 == True and input_state_2 == True:
+        is_alive = '2' # everythind is fine
+    elif input_state_1 == True and input_state_2 == False:
+        is_alive = '1' # compute ressource faliure
+    elif input_state_1 == False:
+        is_alive = '0' # router failure
+        
+    print(is_alive) #output to the resource manager
 
 def call_func():
     global app
-    global app_open
+    global app_open #input from the resource manager
     global proc
     global is_alive
     global is_killed
     global p_app_open
     #print(is_alive, is_killed)
 
-    if(is_alive == '0' and is_killed == False):
-        is_killed = True
-        print("OFF")
-        p_app_open = -1
-        proc.kill()
-        proc.wait()
-        proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
-    elif(is_alive == '1'):
+    if(is_alive == '0' or is_alive == '1'):
+        if(is_killed == False):
+            is_killed = True
+            print("OFF")
+            p_app_open = -1
+            proc.kill()
+            proc.wait()
+            proc = subprocess.Popen(['python', app[-1]]) #app to clean up the running app
+    elif(is_alive == '2'):
         #print("alive")
         is_killed = False
         if(p_app_open != app_open):
