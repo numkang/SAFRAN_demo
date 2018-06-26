@@ -78,7 +78,7 @@ def read_switch():
     input_state_1 = GPIO.input(switch_button_1)
     input_state_2 = GPIO.input(switch_button_2)
     if input_state_1 == True and input_state_2 == True:
-        is_alive = '2' # everythind is fine
+        is_alive = '2' # everything is fine
     elif input_state_1 == True and input_state_2 == False:
         is_alive = '1' # compute ressource faliure
     elif input_state_1 == False:
