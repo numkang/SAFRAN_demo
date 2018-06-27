@@ -147,20 +147,23 @@ def main():
         #client.loop_start() # loop to enable callback functions 
         #client.loop_stop()
 
-        t0 = time.time()
+        t1 = time.time()
+        t2 = time.time()
 
         while True:
             # print(is_alive)
             read_switch()
             call_func()
 
-            t1 = time.time()
-            if (t1 - t0 > 0.05):
+            t0 = time.time()
+            if (t0 - t1 > 0.05):
                 client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
-                t0 = time.time()
-		
-            client.loop_start() # loop to enable callback functions	
-            client.loop_stop()
+                t1 = time.time()
+
+	    if (t0 - t2 > 1):
+                client.loop_start() # loop to enable callback functions	
+                client.loop_stop()
+                t2 = time.time()
 
             is_exit = 0
             pass
