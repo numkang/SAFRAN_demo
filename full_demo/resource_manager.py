@@ -41,8 +41,8 @@ def on_publish_func(client, userdata, message_id):
 def on_message_func(client, userdata, message):
     global node_status
     global node_number
-    print("message topic: ", message.topic)
-    print("message received: ", message.payload)
+    # print("message topic: ", message.topic)
+    # print("message received: ", message.payload)
     # print("message qos: ", message.qos)
     # print("message retain flag: ", message.retain)
     node_id = int(message.topic[4:])
