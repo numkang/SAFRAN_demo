@@ -8,6 +8,7 @@ is_exit = 0
 node_number = 4*4
 node_status = np.empty(node_number, dtype = "S1")
 node_status[:] = '2'
+node_status_temp = [2] * node_number
 
 RPI_ID = -1
 
@@ -94,6 +95,8 @@ def main():
     global fp_w
     try:
         global RPI_ID
+        global node_status
+        global node_status_temp
         get_ID()
 
 	# Communication Setup
@@ -118,13 +121,17 @@ def main():
             # arr = bytearray(reconfiguration_output)
             # print(arr)
 
-            # arr = reconfiguration_func()
+            arr = reconfiguration_func()
 
             t1 = time.time()
             if (t1 - t0 > 1):
-		arr = reconfiguration_func()
+		# arr = reconfiguration_func()
                 client.publish(topic = "resource_manager", payload = arr, qos = 0, retain = False)
-		node_status[:] = '0'
+		for i in range(0, len(node_status_temp)):
+                    if node_status_temp[i] < 5:
+                        node_status_temp[i] += 1
+                    else:
+                        node_status[i] = '0'
 		t0 = time.time()
 
 	    client.loop_start() # loop to enable callback functions	
