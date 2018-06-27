@@ -118,11 +118,13 @@ def main():
             # arr = bytearray(reconfiguration_output)
             # print(arr)
 
-            arr = reconfiguration_func()
+            # arr = reconfiguration_func()
 
             t1 = time.time()
             if (t1 - t0 > 1):
+		arr = reconfiguration_func()
                 client.publish(topic = "resource_manager", payload = arr, qos = 0, retain = False)
+		node_status[:] = '0'
 		t0 = time.time()
 
 	    client.loop_start() # loop to enable callback functions	
