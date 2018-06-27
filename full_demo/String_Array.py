@@ -31,3 +31,10 @@ string = "Python is interesting."
 # string with encoding 'utf-8'
 arr = bytearray(string, 'utf-8')
 print(arr)
+
+i = [0] * 5
+i[0] += 1
+for j in range(0,len(i)):
+    print(j)
+    i[j] += 1
+print(i)
