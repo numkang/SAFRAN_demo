@@ -41,6 +41,7 @@ def on_publish_func(client, userdata, message_id):
 
 def on_message_func(client, userdata, message):
     global node_status
+    global node_status_temp
     global node_number
     # print("message topic: ", message.topic)
     # print("message received: ", message.payload)
@@ -49,6 +50,7 @@ def on_message_func(client, userdata, message):
     node_id = int(message.topic[4:])
     if(node_id >= 1 and node_id <= node_number):
     	node_status[node_id - 1] = int(message.payload)
+    	node_status_temp[node_id - 1] = int(message.payload)
     else:
     	print("Invalid node id")
 
@@ -93,6 +95,7 @@ def reconfiguration_func():
 def main():
     global is_exit
     global fp_w
+    global fp_r
     try:
         global RPI_ID
         global node_status

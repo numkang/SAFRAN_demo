@@ -56,7 +56,7 @@ def on_message_func(client, userdata, message):
     global app_open
     global RPI_ID
     #print("message topic: ", message.topic)
-    print("message received: ", message.payload)
+    # print("message received: ", message.payload)
     # print("message qos: ", message.qos)
     # print("message retain flag: ", message.retain)
     msg = int(message.payload[RPI_ID - 1])
