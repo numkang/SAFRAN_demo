@@ -118,7 +118,7 @@ def main():
 	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
 
 	t0 = time.time()
-
+        client.loop_start()
         while True:
             # reconfiguration_output = reconfiguration_func()
             # arr = bytearray(reconfiguration_output)
@@ -137,14 +137,15 @@ def main():
                         node_status[i] = '0'
 		t0 = time.time()
 
-	    client.loop_start() # loop to enable callback functions	
-	    client.loop_stop()
+	    # client.loop_start() # loop to enable callback functions	
+	    # client.loop_stop()
 
 	    is_exit = 0
 	    pass
     except KeyboardInterrupt:
         is_exit = 1
         print "Exit"
+        client.loop_stop()
         fp_w.close()
         fp_r.close()
         sys.exit(1)
