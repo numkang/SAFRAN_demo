@@ -53,11 +53,11 @@ def on_message_func(client, userdata, message):
     node_id = int(message.topic[4:])
     if(node_id >= 1 and node_id <= node_number):
     	node_status[node_id - 1] = int(message.payload)
-    	node_status_temp[node_id - 1] = node_status[node_id - 1]
+    	node_status_temp[node_id - 1] = int(message.payload)
     else:
     	print("Invalid node id")
 
-    print(node_status_temp)
+    # print(node_status_temp)
 
 def on_log_func(client, userdata, level, string):
     pass
@@ -73,7 +73,7 @@ def reconfiguration_func():
     # Write "".join(node_status) as an input for Louis
     fp_w.seek(0, 0)
     fp_w.write("".join(node_status))
-    #print(node_status)
+    print(node_status)
 
     # Read Louis's output and put it in an chararray form to send to nodes
 
@@ -123,7 +123,7 @@ def main():
 	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
 
 	t0 = time.time()
-        client.loop_start()
+        # client.loop_start()
         while True:
             # reconfiguration_output = reconfiguration_func()
             # arr = bytearray(reconfiguration_output)
@@ -142,8 +142,8 @@ def main():
                         node_status[i] = '0'
 		t0 = time.time()
 
-	    # client.loop_start() # loop to enable callback functions	
-	    # client.loop_stop()
+	    client.loop_start() # loop to enable callback functions	
+	    client.loop_stop()
 
 	    is_exit = 0
 	    pass
