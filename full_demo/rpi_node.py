@@ -148,7 +148,7 @@ def main():
         #client.loop_stop()
 
         t0 = time.time()
-
+        client.loop_start()
         while True:
             # print(is_alive)
             read_switch()
@@ -159,14 +159,15 @@ def main():
                 client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
                 t0 = time.time()
                 
-            client.loop_start() # loop to enable callback functions	
-            client.loop_stop()
+            # client.loop_start() # loop to enable callback functions	
+            # client.loop_stop()
 
             is_exit = 0
             pass
     except KeyboardInterrupt:
         is_exit = 1
         print "Exit"
+        client.loop_stop()
         proc.kill()
         proc.wait()
         sys.exit(1)
