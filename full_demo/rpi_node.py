@@ -155,7 +155,7 @@ def main():
             call_func()
 
             t1 = time.time()
-            if (t1 - t0 > 0.05):
+            if (t1 - t0 > 0.2):
                 client.publish(topic = client_topic, payload = is_alive, qos = 0, retain = False)
                 t0 = time.time()
                 
