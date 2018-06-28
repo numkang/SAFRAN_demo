@@ -149,9 +149,10 @@ def main():
 	    pass
     except KeyboardInterrupt:
         is_exit = 1
-        print "Exit"
+        client.disconnect()
         client.loop_stop()
         fp_w.close()
         fp_r.close()
-        sys.exit(1)
+        print "Exit"
+        sys.exit(1)        
 main()
