@@ -14,6 +14,9 @@ RPI_ID = -1
 
 fp_w = open("faults.txt", "w")
 
+fp_r = open("allocation_mapping.txt", "r")
+fp_r.close()
+
 def get_ID():
     global RPI_ID
     ips = subprocess.check_output(['hostname', '--all-ip-addresses'])
@@ -50,9 +53,11 @@ def on_message_func(client, userdata, message):
     node_id = int(message.topic[4:])
     if(node_id >= 1 and node_id <= node_number):
     	node_status[node_id - 1] = int(message.payload)
-    	node_status_temp[node_id - 1] = int(message.payload)
+    	node_status_temp[node_id - 1] = node_status[node_id - 1]
     else:
     	print("Invalid node id")
+
+    print(node_status_temp)
 
 def on_log_func(client, userdata, level, string):
     pass
@@ -68,7 +73,7 @@ def reconfiguration_func():
     # Write "".join(node_status) as an input for Louis
     fp_w.seek(0, 0)
     fp_w.write("".join(node_status))
-    print(node_status)
+    #print(node_status)
 
     # Read Louis's output and put it in an chararray form to send to nodes
 

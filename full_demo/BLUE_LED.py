@@ -17,6 +17,29 @@ GPIO.setup(RED_LED,   GPIO.OUT)
 GPIO.setup(GREEN_LED, GPIO.OUT)
 GPIO.setup(BLUE_LED,  GPIO.OUT)
 
+# Define a function for the thread
+def read_switch():
+    global input_state_1
+    global input_state_2
+    global is_alive
+
+    input_state_1 = GPIO.input(switch_button_1)
+    input_state_2 = GPIO.input(switch_button_2)
+    if input_state_1 == True and input_state_2 == True:
+        is_alive = '2' # everything is fine
+    elif input_state_1 == True and input_state_2 == False:
+        is_alive = '1' # compute ressource faliure
+    elif input_state_1 == False:
+        is_alive = '0' # router failure
+
+def dummy_func():
+        if is_alive == '2': #expected result
+                print(50)
+                return 50
+        if is_alive == '1': #CR fault
+                print(0)
+                return 0
+
 while True:
 	"""# RED node
 	GPIO.output(RED_LED,   GPIO.HIGH)
@@ -39,8 +62,11 @@ while True:
 	GPIO.output(GREEN_LED, GPIO.LOW)
 	GPIO.output(BLUE_LED,  GPIO.HIGH)
 
+        read_switch()
+        dummy_func()
+        
 	# Wait 1 seconds
-	time.sleep(1)
+	#time.sleep(1)
 
 	"""# GHOST node
 	GPIO.output(RED_LED,   GPIO.HIGH)
