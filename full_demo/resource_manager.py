@@ -184,7 +184,7 @@ def main():
             
             
             print("Voting result: ", voter([int(vote['BLUE']), 50, 50]))
-            print("Faulty application: ", error_detector(vote['BLUE'], 50, 50))
+            print("Faulty application: ", error_detector(int(vote['BLUE']), 50, 50))
             
             
             is_exit = 0
