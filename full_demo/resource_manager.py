@@ -2,7 +2,10 @@ import paho.mqtt.client as mqtt
 import numpy as np
 import time
 import subprocess
-import sys
+
+import sysfrom statistics import median
+
+redundancy_tolerance = 5
 
 is_exit = 0
 node_number = 4*4
@@ -98,6 +101,38 @@ def reconfiguration_func():
 
     return algo_output
 
+
+
+# Redundancy management functions
+def error_detector(val1, val2, val3):
+    '''Returns the number corresponding to the wrong value among three ones, 0 if they all match and 6 if they all mismatch'''
+    # get the values from the three redundant applications, use brokeh
+    mismatch12 = abs(val1 - val2) > redundancy_tolerance
+    mismatch13 = abs(val1 - val3) > redundancy_tolerance
+    mismatch23 = abs(val2 - val3) > redundancy_tolerance
+    
+    return 1*mismatch12*mismatch13 + 2*mismatch12*mismatch23 + 3*mismatch13*mismatch23
+
+def voter(list):
+    '''Simple median.
+    Avoid using float for integer values but the result of
+    the vote can be influenced by the wrong value if the two
+    other are a little different from each other'''
+    return median(list)
+
+def voter2(list, err_detector_result):
+    '''Mean of the matching values, 0 if no value matches.
+    May generate a float value from integer inputs.'''
+    if err_detector_result == 6:
+        return 0
+    else:
+        sum = 0
+        for i in range(3):
+            sum += list[i]*(err_detector_result != i) / ( 3*(err_detector_result == 0) + 2*(err_detector_result != 0) )
+        return sum
+
+
+
 # main loop
 def main():
     global is_exit
@@ -148,7 +183,10 @@ def main():
 	    client.loop_start() # loop to enable callback functions	
 	    client.loop_stop()
 
-	    print(vote)
+
+            print("Voting result: ", voter([vote['BLUE'], 50, 50]))
+            print("Faulty application: ", error_detector(vote['BLUE'], 50, 50))
+
 
 	    is_exit = 0
 	    pass
