@@ -24,7 +24,7 @@ input_state_2 = GPIO.input(switch_button_2)
 is_alive = '2'
 is_killed = False
 is_exit = 0
-proc = subprocess.Popen(['python', "empty.py"])
+proc = subprocess.Popen(['python', "empty.py"]) # dead code?
 
 def get_ID():
     global RPI_ID
@@ -148,7 +148,7 @@ def main():
         #client.loop_stop()
 
         t0 = time.time()
-        # client.loop_start()
+
         while True:
             # print(is_alive)
             read_switch()
@@ -167,7 +167,6 @@ def main():
     except KeyboardInterrupt:
         is_exit = 1
         print "Exit"
-        client.loop_stop()
         proc.kill()
         proc.wait()
         sys.exit(1)

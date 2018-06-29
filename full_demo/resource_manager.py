@@ -10,12 +10,11 @@ node_status = np.empty(node_number, dtype = "S1")
 node_status[:] = '2'
 node_status_temp = [2] * node_number
 
+vote = {'BLUE': -1}
+
 RPI_ID = -1
 
 fp_w = open("faults.txt", "w")
-
-fp_r = open("allocation_mapping.txt", "r")
-fp_r.close()
 
 def get_ID():
     global RPI_ID
@@ -43,6 +42,7 @@ def on_publish_func(client, userdata, message_id):
     pass
 
 def on_message_func(client, userdata, message):
+    global vote # dictionary of the result of the 3 redundant applications
     global node_status
     global node_status_temp
     global node_number
@@ -50,14 +50,16 @@ def on_message_func(client, userdata, message):
     # print("message received: ", message.payload)
     # print("message qos: ", message.qos)
     # print("message retain flag: ", message.retain)
-    node_id = int(message.topic[4:])
-    if(node_id >= 1 and node_id <= node_number):
-    	node_status[node_id - 1] = int(message.payload)
-    	node_status_temp[node_id - 1] = int(message.payload)
-    else:
-    	print("Invalid node id")
-
-    # print(node_status_temp)
+    if(message.topic[0:4] == "rpi/"): # regular Tile status report to the RRM
+        node_id = int(message.topic[4:])
+        if(node_id >= 1 and node_id <= node_number):
+            node_status[node_id - 1] = int(message.payload)
+            node_status_temp[node_id - 1] = int(message.payload)
+        else:
+            print("Invalid node id")
+    elif(message.topic[0:4] == "res_"): # application Result
+        app_color = message.topic[4:]
+        vote[app_color] = message.payload
 
 def on_log_func(client, userdata, level, string):
     pass
@@ -102,14 +104,15 @@ def main():
     global fp_w
     global fp_r
     try:
+        global vote # dictionary of the result of the 3 redundant applications
         global RPI_ID
         global node_status
         global node_status_temp
         get_ID()
 
 	# Communication Setup
-	broker_address = "192.168.0.2" # broker IP address
-	client = mqtt.Client("resource_manager") # client's name
+        broker_address = "192.168.0.2" # broker IP address
+        client = mqtt.Client("resource_manager") # client's name
 
 	# binding callback function
 	# client.on_connect     = on_connect_func
@@ -117,13 +120,13 @@ def main():
 	# client.on_subscribe   = on_subscribe_func
 	# client.on_unsubscribe = on_unsubscribe_func
 	# client.on_publish     = on_publish_func
-	client.on_message     = on_message_func
-	# client.on_log         = on_log_func
-	client.connect(broker_address) # connect to a broker
-	client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
+	client.on_message = on_message_func
+        # client.on_log         = on_log_func
+        client.connect(broker_address) # connect to a broker
+        client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
+	client.subscribe([("res_BLUE", 0)]) # subscribe to Blue application results
+        t0 = time.time()
 
-	t0 = time.time()
-        # client.loop_start()
         while True:
             # reconfiguration_output = reconfiguration_func()
             # arr = bytearray(reconfiguration_output)
@@ -145,14 +148,14 @@ def main():
 	    client.loop_start() # loop to enable callback functions	
 	    client.loop_stop()
 
+	    print(vote)
+
 	    is_exit = 0
 	    pass
     except KeyboardInterrupt:
         is_exit = 1
-        client.disconnect()
-        client.loop_stop()
+        print "Exit"
         fp_w.close()
         fp_r.close()
-        print "Exit"
-        sys.exit(1)        
+        sys.exit(1)
 main()
