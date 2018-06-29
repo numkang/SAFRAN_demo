@@ -57,11 +57,14 @@ def read_switch():
 
 def dummy_func():
         if is_alive == '2': #expected result
-                print(50)
-                return 50
+            print(50)
+            return 50
         if is_alive == '1': #CR fault
-                print(0)
-                return 0
+            print(0)
+            return 0
+        else: #Router fault
+            print('X')
+            return 0
 
 while True:
     """# RED node
