@@ -145,52 +145,52 @@ def main():
         global node_status
         global node_status_temp
         get_ID()
-
-	# Communication Setup
+    
+    # Communication Setup
         broker_address = "192.168.0.2" # broker IP address
         client = mqtt.Client("resource_manager") # client's name
-
-	# binding callback function
-	# client.on_connect     = on_connect_func
-	# client.on_disconnect  = on_disconnect_func
-	# client.on_subscribe   = on_subscribe_func
-	# client.on_unsubscribe = on_unsubscribe_func
-	# client.on_publish     = on_publish_func
-	client.on_message = on_message_func
+    
+    # binding callback function
+    # client.on_connect     = on_connect_func
+    # client.on_disconnect  = on_disconnect_func
+    # client.on_subscribe   = on_subscribe_func
+    # client.on_unsubscribe = on_unsubscribe_func
+    # client.on_publish     = on_publish_func
+    client.on_message = on_message_func
         # client.on_log         = on_log_func
         client.connect(broker_address) # connect to a broker
         client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
-	client.subscribe([("res_BLUE", 0)]) # subscribe to Blue application results
+    client.subscribe([("res_BLUE", 0)]) # subscribe to Blue application results
         t0 = time.time()
-
+    
         while True:
             # reconfiguration_output = reconfiguration_func()
             # arr = bytearray(reconfiguration_output)
             # print(arr)
-
+    
             arr = reconfiguration_func()
-
+    
             t1 = time.time()
             if (t1 - t0 > 1):
-		# arr = reconfiguration_func()
+        # arr = reconfiguration_func()
                 client.publish(topic = "resource_manager", payload = arr, qos = 0, retain = False)
-		for i in range(0, len(node_status_temp)):
+        for i in range(0, len(node_status_temp)):
                     if node_status_temp[i] < 5:
                         node_status_temp[i] += 1
                     else:
                         node_status[i] = '0'
-		t0 = time.time()
-
-	    client.loop_start() # loop to enable callback functions	
-	    client.loop_stop()
-
-
+        t0 = time.time()
+    
+        client.loop_start() # loop to enable callback functions	
+        client.loop_stop()
+    
+    
             print("Voting result: ", voter([vote['BLUE'], 50, 50]))
             print("Faulty application: ", error_detector(vote['BLUE'], 50, 50))
-
-
-	    is_exit = 0
-	    pass
+    
+    
+        is_exit = 0
+        pass
     except KeyboardInterrupt:
         is_exit = 1
         print "Exit"
