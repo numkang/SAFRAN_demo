@@ -183,7 +183,7 @@ def main():
             client.loop_stop()
             
             
-            print("Voting result: ", voter([vote['BLUE'], 50, 50]))
+            print("Voting result: ", voter([int(vote['BLUE']), 50, 50]))
             print("Faulty application: ", error_detector(vote['BLUE'], 50, 50))
             
             
