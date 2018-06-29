@@ -2,8 +2,9 @@ import paho.mqtt.client as mqtt
 import numpy as np
 import time
 import subprocess
+import sys
 
-import sysfrom statistics import median
+from statistics import median
 
 redundancy_tolerance = 5
 
