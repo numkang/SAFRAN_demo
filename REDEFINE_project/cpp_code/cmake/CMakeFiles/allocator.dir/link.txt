@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/allocator.dir/main.cpp.o CMakeFiles/allocator.dir/SAT_fc.cpp.o CMakeFiles/allocator.dir/algos.cpp.o  -o allocator utils/libutils.a minisat/libminisat.a minisatp/libminisatp.a -lgmp minisat/libminisat.a 

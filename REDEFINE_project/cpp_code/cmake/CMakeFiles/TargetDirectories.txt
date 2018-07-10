@@ -1,0 +1,12 @@
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/CMakeFiles/rebuild_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/CMakeFiles/edit_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/CMakeFiles/allocator.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/utils/CMakeFiles/rebuild_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/utils/CMakeFiles/edit_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/utils/CMakeFiles/utils.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/minisat/CMakeFiles/rebuild_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/minisat/CMakeFiles/edit_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/minisat/CMakeFiles/minisat.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/minisatp/CMakeFiles/rebuild_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/minisatp/CMakeFiles/edit_cache.dir
+/home/pi/Documents/REDEFINE_project/cpp_code/cmake/minisatp/CMakeFiles/minisatp.dir
