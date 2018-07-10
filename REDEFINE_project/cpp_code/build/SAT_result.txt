@@ -1,12 +1,15 @@
 c Parsing PB file...
+c Converting 193 PB-constraints to clauses...
+c   -- Unit propagations: pppppppppp  -- Detecting intervals from adjacent constraints: ====###################################################################
+c   -- Clauses(.)/Splits(s): s
 s UNSATISFIABLE
 c _______________________________________________________________________________
 c 
 restarts              : 0
 conflicts             : 0              (0 /sec)
 decisions             : 0              ( nan % random) (0 /sec)
-propagations          : 448            (6562 /sec)
+propagations          : 436            (6084 /sec)
 conflict literals     : 0              ( nan % deleted)
-Memory used           : 8.98 MB
-CPU time              : 0.068268 s
+Memory used           : 5.76 MB
+CPU time              : 0.071669 s
 c _______________________________________________________________________________
