@@ -1,8 +1,0 @@
-*.o
-*.od
-*.or
-*.ox
-depend.mak
-minisat+
-minisat+_64-bit_static
-minisat+_bignum_static

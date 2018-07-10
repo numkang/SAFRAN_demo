@@ -1,1 +1,0 @@
-/usr/bin/c++   -O3 -DNDEBUG   CMakeFiles/minisatp.dir/Main.cc.o  -o minisatp -rdynamic libminisatp.a libminisatp.a ../minisat/libminisat.a -lz -lgmp 
