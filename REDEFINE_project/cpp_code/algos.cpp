@@ -144,6 +144,14 @@ bool update_status(NOC* NoC, int* faulty_tile_nb){
 }
 
 void flexible_algo(NOC* NoC){
+
+	FILE *fault_file_init = fopen("faults.txt","w");
+	if(fault_file_init == NULL){
+		printf("Error opening file faults.txt");
+	}
+
+	fprintf(fault_file_init, "2222222222222222");
+	fclose(fault_file_init);
 	
 	FILE *fp = fopen("/home/pi/Documents/SAFRAN_demo/full_demo/allocation_mapping.txt","w");
 	if(fp == NULL){

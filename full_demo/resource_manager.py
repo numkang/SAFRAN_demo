@@ -158,7 +158,7 @@ def main():
         # client.on_log         = on_log_func
         client.connect(broker_address) # connect to a broker
         client.subscribe([("rpi/#", 0)]) # subscribe to all nodes
-        client.subscribe([("res_BLUE", 0)]) # subscribe to Blue application results
+        # client.subscribe([("res_BLUE", 0)]) # subscribe to Blue application results
         t0 = time.time()
         
         while True:
@@ -182,10 +182,8 @@ def main():
             client.loop_start() # loop to enable callback functions	
             client.loop_stop()
             
-            
-            print("Voting result: ", voter([int(vote['BLUE']), 50, 50]))
-            print("Faulty application: ", error_detector(int(vote['BLUE']), 50, 50))
-            
+            #print("Voting result: ", voter([int(vote['BLUE']), 50, 50]))
+            #print("Faulty application: ", error_detector(int(vote['BLUE']), 50, 50))
             
             is_exit = 0
             pass

@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -148,41 +148,41 @@ sys/resource.h
 unistd.h
 -
 
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/core/Solver.cc
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/core/Solver.cc
 math.h
 -
 minisat/mtl/Alg.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/mtl/Alg.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/mtl/Alg.h
 minisat/mtl/Sort.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/mtl/Sort.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/mtl/Sort.h
 minisat/utils/System.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/utils/System.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/utils/System.h
 minisat/core/Solver.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/core/Solver.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/core/minisat/core/Solver.h
 
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/simp/SimpSolver.cc
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/simp/SimpSolver.cc
 minisat/mtl/Sort.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/simp/minisat/mtl/Sort.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/simp/minisat/mtl/Sort.h
 minisat/simp/SimpSolver.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/simp/minisat/simp/SimpSolver.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/simp/minisat/simp/SimpSolver.h
 minisat/utils/System.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/simp/minisat/utils/System.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/simp/minisat/utils/System.h
 
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/utils/Options.cc
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/utils/Options.cc
 minisat/mtl/Sort.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/mtl/Sort.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/mtl/Sort.h
 minisat/utils/Options.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/utils/Options.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/utils/Options.h
 minisat/utils/ParseUtils.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/utils/ParseUtils.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/utils/ParseUtils.h
 
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/utils/System.cc
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/utils/System.cc
 signal.h
 -
 stdio.h
 -
 minisat/utils/System.h
-/home/pi/Documents/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/utils/System.h
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/minisat/minisat/utils/minisat/utils/System.h
 stdlib.h
 -
 malloc/malloc.h

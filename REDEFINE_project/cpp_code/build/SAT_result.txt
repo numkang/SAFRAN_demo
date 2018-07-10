@@ -8,8 +8,8 @@ c
 restarts              : 0
 conflicts             : 0              (0 /sec)
 decisions             : 0              ( nan % random) (0 /sec)
-propagations          : 436            (6084 /sec)
+propagations          : 436            (7758 /sec)
 conflict literals     : 0              ( nan % deleted)
 Memory used           : 5.76 MB
-CPU time              : 0.071669 s
+CPU time              : 0.056199 s
 c _______________________________________________________________________________

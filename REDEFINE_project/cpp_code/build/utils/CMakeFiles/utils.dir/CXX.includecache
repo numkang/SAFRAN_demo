@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -6,43 +6,43 @@
 
 #IncludeRegexTransform: 
 
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/Matrix.cpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/Matrix.cpp
 Matrix.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/Matrix.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/Matrix.hpp
 iostream
 -
 
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/Matrix.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/Matrix.hpp
 
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/create_func.cpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/create_func.cpp
 Matrix.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/Matrix.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/Matrix.hpp
 get_func.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/get_func.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/get_func.hpp
 create_func.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/create_func.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/create_func.hpp
 list
 -
 
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/create_func.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/create_func.hpp
 list
 -
 Matrix.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/Matrix.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/Matrix.hpp
 
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/get_func.cpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/get_func.cpp
 iostream
 -
 get_func.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/get_func.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/get_func.hpp
 Matrix.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/Matrix.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/Matrix.hpp
 list
 -
 
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/get_func.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/get_func.hpp
 list
 -
 Matrix.hpp
-/home/pi/Documents/REDEFINE_project/cpp_code/utils/Matrix.hpp
+/home/pi/Documents/SAFRAN_demo/REDEFINE_project/cpp_code/utils/Matrix.hpp
 
