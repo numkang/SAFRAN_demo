@@ -69,7 +69,7 @@ def on_message_func(client, userdata, message):
     # print("message qos: ", message.qos)
     # print("message retain flag: ", message.retain)
     msg = int(message.payload[RPI_ID - 1])
-    print(msg)
+    #print(msg)
     if(msg >= 0 and msg < len(app)):
         app_open = msg
     else:
