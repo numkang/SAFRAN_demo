@@ -34,6 +34,9 @@ def get_ID():
     print(ind)
     if(ips[ind-2] != "."):
         print("a")
+        print(ips[ind-2:ind-1])
+        print(ips[10:12])
+        print(ips[10:11])
         RPI_ID = int(ips[ind-2:ind-1]) - 2
     else:
         print("b")
