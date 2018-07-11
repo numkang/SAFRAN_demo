@@ -58,7 +58,9 @@ def on_message_func(client, userdata, message):
             node_status[node_id - 1] = int(message.payload)
             node_status_temp[node_id - 1] = int(message.payload)
         else:
-            print("Invalid node id")
+            print(message.topic)
+            #print(node_id)
+            print(" Invalid node id")
     elif(message.topic[0:4] == "res_"): # application Result
         app_color = message.topic[4:]
         vote[app_color] = message.payload

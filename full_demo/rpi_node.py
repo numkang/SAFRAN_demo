@@ -34,6 +34,8 @@ def get_ID():
        RPI_ID = int(ips[ind-2:ind-1]) - 2
     else:
        RPI_ID = int(ips[ind-1]) - 2
+       
+    print(RPI_ID)
 
 # Define callback function
 def on_connect_func(client, userdata, flags, rc):
