@@ -30,8 +30,8 @@ def get_ID():
     global RPI_ID
     ips = subprocess.check_output(['hostname', '--all-ip-addresses'])
     ind = ips.index(" ")
-    print(ips)
-    print(ind)
+##    print(ips)
+##    print(ind)
     if(ips[ind-2] != "."):
 ##        print("a")
 ##        print(ips[ind-2:ind-1])
