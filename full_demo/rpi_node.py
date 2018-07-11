@@ -33,16 +33,16 @@ def get_ID():
     print(ips)
     print(ind)
     if(ips[ind-2] != "."):
-        print("a")
-        print(ips[ind-2:ind-1])
-        print(ips[10:12])
-        print(ips[10:11])
-        RPI_ID = int(ips[ind-2:ind-1]) - 2
+##        print("a")
+##        print(ips[ind-2:ind-1])
+##        print(ips[10:12])
+##        print(ips[10:11])
+        RPI_ID = int(ips[ind-2:ind]) - 2
     else:
-        print("b")
+##        print("b")
         RPI_ID = int(ips[ind-1]) - 2
        
-    print(RPI_ID)
+##    print(RPI_ID)
 
 # Define callback function
 def on_connect_func(client, userdata, flags, rc):
